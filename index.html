@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreativeStudio - Premium Digital Agency</title>
+  <meta name="description" content="CreativeStudio is a premium digital agency offering Graphic Design, Web Development, Digital Marketing, Video Editing, and UI/UX Design." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="style.css?v=99?v=7" />
+</head>
+<body class="preloading">
+  <!-- If JS is unavailable the preloader can never be dismissed, so drop it entirely -->
+  <noscript>
+    <style>
+      .preloader { display: none !important; }
+      .preloading .hero-badge, .preloading .hero-title, .preloading .hero-sub,
+      .preloading .hero-btns, .preloading .hero-stats, .preloading .hero-scroll-hint,
+      .preloading .navbar { opacity: 1 !important; }
+    </style>
+  </noscript>
+
+  <!-- ===== INTRO PRELOADER ===== -->
+  <div class="preloader" id="preloader" style="display:none">
+    <div class="preloader-inner">
+      <span class="preloader-ring" aria-hidden="true"></span>
+      <img src="logo.png?v=6" alt="CreativeStudio" class="preloader-logo" width="246" height="74" />
+      <div class="preloader-bar"><span></span></div>
+      <p class="preloader-text">Loading Experience</p>
+    </div>
+  </div>
+
+  <header class="navbar" id="navbar">
+    <div class="nav-top-line"></div>
+    <div class="container nav-inner">
+      <!-- Logo + Brand name (Blue area) -->
+      <a href="#" class="logo logo-img" id="logo-link">
+        <img src="logo.png?v=6" alt="CreativeStudio" class="nav-logo-img" width="246" height="74" />
+      </a>
+      <!-- Center nav links -->
+      <nav class="nav-links" id="nav-links">
+        <a href="#home"      id="nav-home">Home</a>
+        <a href="#about"     id="nav-about">About Us</a>
+        <a href="#services"  id="nav-services">Services</a>
+        <a href="portfolio.html"  id="nav-portfolio">Portfolio</a>
+        <a href="#videos"    id="nav-videos">Videos</a>
+        <a href="#contact"   id="nav-contact-link">Contact</a>
+      </nav>
+      <!-- Get Started — far right (Red area) -->
+      <a href="#contact" id="nav-cta-btn" class="nav-cta">Get Started</a>
+      <!-- Hamburger (mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+    <section class="hero" id="home">
+    <canvas id="hero-particles"></canvas>
+    <!-- Vertical light beams background -->
+    <div class="hero-beams" aria-hidden="true">
+      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
+      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
+      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
+      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
+    </div>
+    <div class="hero-center-glow" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <!-- Badge -->
+      <div class="hero-badge"><span class="badge-dot"></span>Digital Creative Agency</div>
+
+      <!-- Heading -->
+      <h1 class="hero-title">
+        <span class="hero-title-line1">Your Business,</span>
+        <em class="hero-title-italic">Our Responsibility</em>
+      </h1>
+
+      <!-- Sub -->
+      <p class="hero-sub">Creative Media &amp; Digital Solutions for Businesses,<br>Brands &amp; Professionals.</p>
+
+      <!-- Buttons -->
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary" id="hero-cta">Start a Project</a>
+        <a href="#portfolio" class="btn btn-outline" id="hero-portfolio">View Our Work</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-target="250">0</span><span class="stat-plus">+</span><span class="stat-label">Projects Done</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="98">0</span><span class="stat-plus">%</span><span class="stat-label">Client Satisfaction</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num" data-target="7">0</span><span class="stat-plus">+</span><span class="stat-label">Years Experience</span></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint"><span>Scroll Down</span><div class="scroll-arrow"></div></div>
+  </section>
+
+  <!-- Pill-style scrolling service tags (between hero & about) -->
+  <div class="svc-tag-ticker-wrap">
+    <div class="svc-tag-ticker">
+      <span class="svc-pill">Commercial Production</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Content Creation</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Documentary</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Advertising</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Social Media</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Motion Graphics</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Graphic Design</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Website Development</span>
+      <span class="svc-sep">+</span>
+      <!-- duplicate for seamless loop -->
+      <span class="svc-pill">Commercial Production</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Content Creation</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Documentary</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Advertising</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Social Media</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Motion Graphics</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Graphic Design</span>
+      <span class="svc-sep">+</span>
+      <span class="svc-pill">Website Development</span>
+      <span class="svc-sep">+</span>
+    </div>
+  </div>
+
+  
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="about-split">
+        <!-- LEFT: Video -->
+        <div class="about-video-side" data-animate="fadeLeft">
+          <div class="about-video-wrap">
+            <div class="about-video-glow"></div>
+            <div class="about-video-frame">
+              <iframe
+                id="about-youtube"
+                src="https://www.youtube.com/embed/fS4cH2fky5M?rel=0&modestbranding=1"
+                title="CreativeStudio Introduction"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Text Content -->
+        <div class="about-text-side" data-animate="fadeRight">
+          <span class="section-tag">About Us</span>
+          <h2 class="about-heading">About <span class="gradient-text">Creative Studio</span></h2>
+          
+          <p class="about-paragraph">Creative Studio is a creative media and digital solutions agency built by a team of passionate and creative minds with a shared vision of turning ideas into impactful visual experiences. We work with businesses, brands, professionals, and organizations to create meaningful content that helps them communicate, connect, and grow.</p>
+          
+          <p class="about-paragraph">Our core expertise lies in Commercial Production, Content Creation, Documentary Production, and Advertising. We also provide Social Media Management, Motion Graphics, Graphic Design, Website Development, and other creative solutions tailored to our clients' needs.</p>
+          
+          <p class="about-paragraph">At Creative Studio, we believe that every business has a story worth telling. Our goal is to transform ideas, products, services, and experiences into compelling visual stories that capture attention, build meaningful connections, and create lasting impressions.</p>
+          
+          <p class="about-paragraph accent">We are a growing creative studio with a big vision &mdash; to become a trusted creative partner for businesses and brands by delivering professional, innovative, and impactful creative solutions under one roof.</p>
+
+          <!-- Feature highlights -->
+          <div class="about-highlights">
+            <div class="about-highlight-item">
+              <span class="highlight-num">7+</span>
+              <span class="highlight-label">Years Experience</span>
+            </div>
+            <div class="about-highlight-item">
+              <span class="highlight-num">500+</span>
+              <span class="highlight-label">Projects Done</span>
+            </div>
+            <div class="about-highlight-item">
+              <span class="highlight-num">98%</span>
+              <span class="highlight-label">Client Satisfaction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section services" id="services">
+    <div class="container">
+
+
+      <div class="section-header">
+        <span class="section-tag">What We Do</span>
+        <h2 class="section-title">Services That <span class="gradient-text">Scale</span> Your Brand</h2>
+        <p class="section-sub">From concept to launch &mdash; we handle every pixel, every line of code, every campaign.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card featured" id="svc-commercial">
+          <div class="service-badge">Top Priority</div>
+          <div class="service-icon svc-icon-video"></div>
+          <h3>Commercial Production</h3>
+          <p>Professional commercial and promotional video production for businesses, brands, products, and campaigns that drive results.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-content">
+          <div class="service-icon svc-icon-graphic"></div>
+          <h3>Content Creation</h3>
+          <p>Creative and engaging visual content designed for social media, digital platforms, and brand communication that captivates audiences.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-documentary">
+          <div class="service-icon svc-icon-video"></div>
+          <h3>Documentary Production</h3>
+          <p>Professional documentary production focused on meaningful stories, people, organizations, brands, and real-life experiences.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-advertising">
+          <div class="service-icon svc-icon-mkt"></div>
+          <h3>Advertising</h3>
+          <p>Creative advertising solutions designed to communicate brand messages and connect businesses with their target audiences effectively.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-digital">
+          <div class="service-icon svc-icon-seo"></div>
+          <h3>Digital, Creative &amp; Social Media</h3>
+          <p>Content planning, creative development, and social media management to maintain a consistent and impactful digital presence.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-motion">
+          <div class="service-icon svc-icon-ui"></div>
+          <h3>Motion Graphics</h3>
+          <p>Engaging motion graphics and animated visual content for promotional, explainer, and digital communication projects.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-graphic">
+          <div class="service-icon svc-icon-graphic"></div>
+          <h3>Graphic Design</h3>
+          <p>Creative graphic design solutions for branding, social media, marketing materials, and digital platforms that stand out.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+        <div class="service-card" id="svc-web">
+          <div class="service-icon svc-icon-web"></div>
+          <h3>Website Development</h3>
+          <p>Professional and user-friendly website development solutions for businesses and organizations that convert visitors into clients.</p>
+          <a href="#contact" class="service-link">Get Started &rarr;</a>
+          <div class="service-card-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How We Work</span>
+        <h2 class="section-title">Our <span class="gradient-text">Process</span></h2>
+        <p class="section-sub">A streamlined workflow designed to deliver results on time, every time.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step" id="step-1">
+          <div class="step-num">01</div>
+          <div class="step-icon step-icon-1"></div>
+          <h3>Discovery</h3>
+          <p>We deep-dive into your brand, audience, goals, and competitors to build a clear strategic foundation.</p>
+        </div>
+        <div class="process-arrow">&rarr;</div>
+        <div class="process-step" id="step-2">
+          <div class="step-num">02</div>
+          <div class="step-icon step-icon-2"></div>
+          <h3>Strategy</h3>
+          <p>We craft a custom roadmap &mdash; creative direction, tech stack, campaign plan &mdash; aligned to your objectives.</p>
+        </div>
+        <div class="process-arrow">&rarr;</div>
+        <div class="process-step" id="step-3">
+          <div class="step-num">03</div>
+          <div class="step-icon step-icon-3"></div>
+          <h3>Execution</h3>
+          <p>Our team brings the strategy to life with precision, creativity, and speed &mdash; keeping you in the loop.</p>
+        </div>
+        <div class="process-arrow">&rarr;</div>
+        <div class="process-step" id="step-4">
+          <div class="step-num">04</div>
+          <div class="step-icon step-icon-4"></div>
+          <h3>Domination</h3>
+          <p>We launch, measure, optimize, and scale &mdash; turning your brand into an industry leader.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Work</span>
+        <h2 class="section-title">Featured <span class="gradient-text">Portfolio</span></h2>
+        <p class="section-sub">A glimpse of the brands we have helped transform and grow.</p>
+      </div>
+    </div>
+
+    <!-- ROW 1: RIGHT -->
+    <div class="pf-marquee-wrap">
+      <div class="pf-marquee pf-row-right">
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+        <!-- duplicate for seamless loop -->
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: LEFT -->
+    <div class="pf-marquee-wrap">
+      <div class="pf-marquee pf-row-left">
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+        <!-- duplicate -->
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+      </div>
+    </div>
+
+    <!-- ROW 3: RIGHT (slower) -->
+    <div class="pf-marquee-wrap">
+      <div class="pf-marquee pf-row-right pf-row-slower">
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+        <!-- duplicate -->
+        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI via targeted social and PPC campaigns</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video &mdash; cinematic quality</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity &mdash; logo, palette &amp; packaging</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI with 4.8&#9733; user satisfaction</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales increase</p></div></div></div>
+        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate website with CMS</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIDEOS ===== -->
+  <section class="section videos" id="videos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Videos</span>
+        <h2 class="section-title">Work That <span class="gradient-text">Moves</span></h2>
+        <p class="section-sub">Commercials, documentaries and brand films we have produced end to end.</p>
+      </div>
+
+      <div class="videos-grid">
+        <!-- To make a card playable, put the YouTube ID in data-yt (e.g. data-yt="dQw4w9WgXcQ") -->
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v1">
+            <span class="video-duration">2:14</span>
+            <button class="video-play" aria-label="Play Luxe Cosmetics brand film">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">Commercial</span>
+            <h4>Luxe Cosmetics Brand Film</h4>
+            <p>A 30-second hero spot cut for TV and social.</p>
+          </div>
+        </article>
+
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v2">
+            <span class="video-duration">5:08</span>
+            <button class="video-play" aria-label="Play TechStart documentary">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">Documentary</span>
+            <h4>TechStart: The First Year</h4>
+            <p>Founder-led story following a startup from garage to launch.</p>
+          </div>
+        </article>
+
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v3">
+            <span class="video-duration">1:02</span>
+            <button class="video-play" aria-label="Play ViralBoost campaign video">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">Campaign</span>
+            <h4>ViralBoost Launch</h4>
+            <p>Short-form campaign video that passed 2M organic views.</p>
+          </div>
+        </article>
+
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v4">
+            <span class="video-duration">3:41</span>
+            <button class="video-play" aria-label="Play ShopNow product reel">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">Product</span>
+            <h4>ShopNow Product Reel</h4>
+            <p>Feature walkthrough built for the e-commerce launch page.</p>
+          </div>
+        </article>
+
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v5">
+            <span class="video-duration">4:27</span>
+            <button class="video-play" aria-label="Play GreenTech corporate profile">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">Corporate</span>
+            <h4>GreenTech Company Profile</h4>
+            <p>Corporate profile film for investor and partner decks.</p>
+          </div>
+        </article>
+
+        <article class="video-card" data-yt="">
+          <div class="video-thumb v6">
+            <span class="video-duration">0:48</span>
+            <button class="video-play" aria-label="Play FinTrack app promo">
+              <span class="video-play-tri"></span>
+            </button>
+          </div>
+          <div class="video-meta">
+            <span class="video-tag">App Promo</span>
+            <h4>FinTrack App Promo</h4>
+            <p>Motion-graphics promo for the finance app release.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Lightbox: only injects an iframe after a click, so nothing loads on page load -->
+    <div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+      <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+      <div class="video-modal-inner">
+        <button class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
+        <div class="video-modal-frame" id="video-modal-frame"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Testimonials</span>
+        <h2 class="section-title">What Our Clients <span class="gradient-text">Say</span></h2>
+        <p class="section-sub">Don't take our word for it &mdash; hear from the brands we have helped grow.</p>
+      </div>
+      <div class="testimonials-wrapper">
+        <div class="testimonials-track" id="testi-track">
+          <div class="testimonial-card active" id="testi-1">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">"CreativeStudio transformed our brand completely. Their design team is world-class and the results speak for themselves. Website traffic tripled within 60 days!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">IJ</div>
+              <div><strong>Iraj Janali</strong><span>Founder at Janco</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card" id="testi-2">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">"I worked with CreativeStudio on our visual design and I am blown away by the attention to detail. Their creativity is unmatched and the team is incredibly responsive!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:linear-gradient(135deg,#0891b2,#67e8f9)">RT</div>
+              <div><strong>Randy Taggart</strong><span>Sr. Photographer at WACC</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card" id="testi-3">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">"They handle all our design needs and recently developed our website. Excellent services, outstanding after-sales support, and budget-friendly. Best agency ever!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:linear-gradient(135deg,#d97706,#fbbf24)">NM</div>
+              <div><strong>Nayeem Mia</strong><span>Founder at HNS TECH</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card" id="testi-4">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">"Working with CreativeStudio was the best business decision this year. Their strategic approach delivered 400% ROI. Absolutely phenomenal team!"</p>
+            <div class="testi-author">
+              <div class="testi-avatar" style="background:linear-gradient(135deg,#059669,#6ee7b7)">SK</div>
+              <div><strong>Sarah Kim</strong><span>CEO at GreenTech Solutions</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-controls">
+          <button class="testi-btn" id="testi-prev">&#8249;</button>
+          <div class="testi-dots" id="testi-dots">
+            <span class="testi-dot active" data-idx="0"></span>
+            <span class="testi-dot" data-idx="1"></span>
+            <span class="testi-dot" data-idx="2"></span>
+            <span class="testi-dot" data-idx="3"></span>
+          </div>
+          <button class="testi-btn" id="testi-next">&#8250;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq" id="faq">
+    <div class="container faq-inner">
+      <div class="faq-left">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Frequently <span class="gradient-text">Asked</span> Questions</h2>
+        <p class="faq-desc">Got questions? We have answers. If you don't see yours here, just reach out!</p>
+        <div class="faq-contact-box">
+          <div class="faq-contact-avatar">&#128075;</div>
+          <div><p>Still have questions?</p><a href="#contact" class="btn btn-primary btn-sm" id="faq-cta">Ask Us Anything</a></div>
+        </div>
+      </div>
+      <div class="faq-right">
+        <div class="faq-item" id="faq-1">
+          <button class="faq-question">What services does CreativeStudio offer?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>We specialize in Graphic Design, Web Development, Digital Marketing, Video Editing, UI/UX Design &mdash; all tailored to help your brand dominate the industry.</p></div>
+        </div>
+        <div class="faq-item" id="faq-2">
+          <button class="faq-question">Why choose CreativeStudio over competitors?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>Our team combines data-driven strategies, bold creative storytelling, and relentless execution. We deliver results that make your brand stand out and scale fast.</p></div>
+        </div>
+        <div class="faq-item" id="faq-3">
+          <button class="faq-question">How do you measure campaign success?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>Through real-time analytics (ROI, engagement, conversions) and transparent reports &mdash; because we believe in results, not just activity.</p></div>
+        </div>
+        <div class="faq-item" id="faq-4">
+          <button class="faq-question">What is your pricing structure?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>We offer customized packages based on your goals and budget. Book a free consultation to get a tailored quote for your project!</p></div>
+        </div>
+        <div class="faq-item" id="faq-5">
+          <button class="faq-question">How long before we see results?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>Most clients see traction within 30&ndash;60 days, but we optimize continuously for long-term growth and sustained performance.</p></div>
+        </div>
+        <div class="faq-item" id="faq-6">
+          <button class="faq-question">Do you work with startups and SMEs?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>Absolutely! We help businesses of all sizes &mdash; from local startups to global brands &mdash; punch above their weight in the digital space.</p></div>
+        </div>
+        <div class="faq-item" id="faq-7">
+          <button class="faq-question">What is your client onboarding process?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><p>Simple: Discovery &rarr; Strategy &rarr; Execution &rarr; Domination. We keep you in the loop at every single step of the journey.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="container contact-inner">
+      <div class="contact-left">
+        <span class="section-tag">Contact Us</span>
+        <h2 class="section-title">Have a Great <span class="gradient-text">Idea?</span></h2>
+        <p class="contact-desc">Let us turn it into something amazing. Drop us a message and we will get back to you within 24 hours.</p>
+        <div class="contact-info">
+          <div class="contact-info-item" id="contact-address-op">
+            <span class="contact-info-icon">&#128205;</span>
+            <div><strong>Operational Office</strong><span>Patowary Cottage, Holding No. 11, Sonatongor, Hazaribagh, Dhaka-1209, Bangladesh</span></div>
+          </div>
+          <div class="contact-info-item" id="contact-address-corp">
+            <span class="contact-info-icon">&#127970;</span>
+            <div><strong>Corporate Address</strong><span>Mahimaganj, Gobindaganj, Gaibandha, Bangladesh</span></div>
+          </div>
+          <div class="contact-info-item" id="contact-phone">
+            <span class="contact-info-icon">&#128222;</span>
+            <div><strong>Call Us</strong><a href="tel:+8801613595594">+880 1613 595 594</a></div>
+          </div>
+          <div class="contact-info-item" id="contact-email">
+            <span class="contact-info-icon">&#128231;</span>
+            <div><strong>Email Us</strong><a href="mailto:yoursupport.creativestudio@gmail.com">yoursupport.creativestudio@gmail.com</a></div>
+          </div>
+          <div class="contact-info-item" id="contact-wa">
+            <span class="contact-info-icon">&#128172;</span>
+            <div><strong>WhatsApp</strong><a href="https://wa.me/8801613595594" target="_blank" rel="noopener">+880 1613 595 594</a></div>
+          </div>
+        </div>
+        <div class="contact-socials">
+          <a href="https://www.facebook.com/share/1GMdxYj2or/" class="social-link" id="social-fb" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/yoursupport.creativestudio" class="social-link" id="social-ig" aria-label="Instagram" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://youtube.com/playlist?list=PLR0s6QUOgBdM" class="social-link" id="social-yt" aria-label="YouTube" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="form-name">Your Name</label>
+              <input type="text" id="form-name" name="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="form-email">Email Address</label>
+              <input type="email" id="form-email" name="email" placeholder="john@example.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="form-service">Service Needed</label>
+            <select id="form-service" name="service">
+              <option value="">Select a service...</option>
+              <option value="graphic">Graphic Design</option>
+              <option value="web">Web Development</option>
+              <option value="marketing">Digital Marketing</option>
+              <option value="video">Video Editing</option>
+              <option value="uiux">UI/UX Design</option>
+              <option value="seo">SEO and Strategy</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-budget">Budget Range</label>
+            <select id="form-budget" name="budget">
+              <option value="">Select budget...</option>
+              <option value="500">$500 - $1,000</option>
+              <option value="1000">$1,000 - $5,000</option>
+              <option value="5000">$5,000 - $10,000</option>
+              <option value="10000">$10,000+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-message">Project Details</label>
+            <textarea id="form-message" name="message" rows="4" placeholder="Tell us about your project, goals, and timeline..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="form-submit">Send Message &#128640;</button>
+          <div class="form-success" id="form-success" style="display:none">&#9989; Thank you! We will be in touch within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo logo-img"><img src="logo.png?v=6" alt="CreativeStudio" class="footer-logo-img" width="246" height="74" /></a>
+          <p>A creative media and digital solutions agency turning ideas into impactful visual experiences.</p>
+          <div class="footer-socials" style="display:flex;gap:12px;margin-top:16px;">
+            <a href="https://www.facebook.com/share/1GMdxYj2or/" target="_blank" rel="noopener" aria-label="Facebook" style="width:38px;height:38px;border-radius:50%;background:rgba(106,176,76,0.1);border:1px solid rgba(106,176,76,0.25);display:flex;align-items:center;justify-content:center;color:#94a3b8;transition:all 0.2s;" onmouseover="this.style.background='rgba(106,176,76,0.2)';this.style.color='#6ab04c'" onmouseout="this.style.background='rgba(106,176,76,0.1)';this.style.color='#94a3b8'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/yoursupport.creativestudio" target="_blank" rel="noopener" aria-label="Instagram" style="width:38px;height:38px;border-radius:50%;background:rgba(106,176,76,0.1);border:1px solid rgba(106,176,76,0.25);display:flex;align-items:center;justify-content:center;color:#94a3b8;transition:all 0.2s;" onmouseover="this.style.background='rgba(106,176,76,0.2)';this.style.color='#6ab04c'" onmouseout="this.style.background='rgba(106,176,76,0.1)';this.style.color='#94a3b8'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://youtube.com/playlist?list=PLR0s6QUOgBdM" target="_blank" rel="noopener" aria-label="YouTube" style="width:38px;height:38px;border-radius:50%;background:rgba(106,176,76,0.1);border:1px solid rgba(106,176,76,0.25);display:flex;align-items:center;justify-content:center;color:#94a3b8;transition:all 0.2s;" onmouseover="this.style.background='rgba(106,176,76,0.2)';this.style.color='#6ab04c'" onmouseout="this.style.background='rgba(106,176,76,0.1)';this.style.color='#94a3b8'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Services</h4>
+          <a href="#services">Commercial Production</a>
+          <a href="#services">Content Creation</a>
+          <a href="#services">Documentary</a>
+          <a href="#services">Motion Graphics</a>
+          <a href="#services">Graphic Design</a>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <a href="#about">About Us</a>
+          <a href="portfolio.html">Portfolio</a>
+          <a href="#videos">Videos</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <p>Subscribe for tips, case studies and exclusive offers.</p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" id="nl-email" placeholder="your@email.com" aria-label="Newsletter email" />
+            <button type="submit" id="nl-submit">&rarr;</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 Creative Studio. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#home" class="back-to-top" id="back-to-top" aria-label="Back to top">&#8679;</a>
+  <script src="script.js?v=6"></script>
+</body>
+</html>
