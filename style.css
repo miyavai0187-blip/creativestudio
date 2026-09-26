@@ -96,31 +96,11 @@ h2 { font-family: var(--font-heading); font-weight: 600; }
 h3 { font-family: var(--font-heading); font-weight: 600; }
 strong, b { font-weight: 600; }
 
-/* ===== AMBIENT GLOW BACKGROUND ===== */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 65% 55% at 90% 5%,  rgba(180, 80,  10, 0.50) 0%, transparent 65%),
-    radial-gradient(ellipse 55% 50% at 5%  15%,  rgba(100, 20, 180, 0.40) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 40% at 50% 95%,  rgba(121,179,  43, 0.20) 0%, transparent 60%);
-}
+/* ===== AMBIENT GLOW BACKGROUND (removed) ===== */
+/* body::before gradient removed as per user request */
 
-/* ===== GRAIN TEXTURE OVERLAY ===== */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.10;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px 180px;
-}
+/* ===== GRAIN TEXTURE OVERLAY (removed) ===== */
+/* body::after grain removed as per user request */
 
 /* All sections must sit above the fixed glow/grain */
 header, section, footer {
