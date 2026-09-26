@@ -1635,18 +1635,55 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   a#nav-cta-btn { display: none; }
   .hamburger { display: flex !important; margin-left: auto; }
   .nav-links {
-    display: none; flex-direction: column;
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,2,5,0.97); backdrop-filter: blur(20px);
-    z-index: 999; padding: 100px 32px 32px; gap: 8px;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0d0d0d;
+    z-index: 999;
+    padding: 90px 32px 40px;
+    gap: 0;
     overflow-y: auto;
+    justify-content: flex-start;
   }
   .nav-links.open { display: flex; }
   .nav-links a {
-    font-size: 1.1rem; padding: 14px 0;
-    border-bottom: 1px solid var(--border); border-radius: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0;
+    color: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: color 0.2s ease;
   }
-  .nav-links a.nav-active { background: none; color: var(--primary); }
+  .nav-links a::after {
+    content: '↗';
+    font-size: 1rem;
+    color: rgba(255,255,255,0.35);
+    transition: color 0.2s ease, transform 0.2s ease;
+    left: unset; right: unset;
+    width: auto; height: auto;
+    background: none;
+    position: static;
+    opacity: 1;
+  }
+  .nav-links a:hover {
+    color: #ffffff;
+    background: none;
+  }
+  .nav-links a:hover::after {
+    color: var(--primary);
+    transform: translate(2px, -2px);
+    left: unset; right: unset;
+  }
+  .nav-links a.nav-active {
+    background: none;
+    color: var(--primary);
+    font-weight: 600;
+  }
 
   /* ---- Hero (card box — synced with line 572) ---- */
   .hero {
