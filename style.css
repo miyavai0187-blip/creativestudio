@@ -218,7 +218,7 @@ a { text-decoration: none; color: inherit; transition: var(--transition); }
 }
 
 .navbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1001;
   padding: 7px 0;
   background: rgba(0,2,5,0.55);
   backdrop-filter: blur(18px);
@@ -1640,11 +1640,16 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: #0d0d0d;
-    z-index: 999;
+    z-index: 1000;
     padding: 90px 32px 40px;
     gap: 0;
     overflow-y: auto;
     justify-content: flex-start;
+    animation: menuSlideIn 0.3s ease;
+  }
+  @keyframes menuSlideIn {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .nav-links.open { display: flex; }
   .nav-links a {
