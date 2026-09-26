@@ -578,19 +578,16 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     border-radius: 20px;
     overflow: hidden;
     padding-top: 0;
-    background: #000000;
+    background: #111111;
   }
   .hero-video-bg {
-    border-radius: 20px;
-  }
-  .hero-video-bg video {
-    object-position: center center;
+    display: none;
   }
   .hero-video-overlay {
-    border-radius: 20px;
+    display: none;
   }
   .hero-inner {
-    padding: 64px 24px 64px 24px;
+    padding: 80px 24px 36px 24px;
     min-height: 0;
     max-width: 100%;
     width: 100%;
@@ -600,9 +597,9 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .hero-badge {
     font-size: 0.78rem;
     padding: 5px 14px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
   }
-  .hero-title { margin-bottom: 14px; }
+  .hero-title { margin-bottom: 8px; }
   .hero-title-line1 {
     font-size: clamp(1.7rem, 8vw, 2.6rem);
     line-height: 1.1;
@@ -614,22 +611,22 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .hero-sub {
     font-size: 0.85rem;
     max-width: 100%;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
   .hero-btns {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     width: auto;
-    margin-bottom: 26px;
+    margin-bottom: 18px;
   }
   .hero-btns .btn {
     width: auto;
     text-align: center;
     justify-content: center;
-    padding: 11px 28px;
+    padding: 10px 26px;
   }
   .hero-stats {
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
   }
   .stat-num { font-size: 1.3rem; }
@@ -1663,27 +1660,25 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   }
   .nav-links a.nav-active { background: none; color: var(--primary); }
 
-  /* ---- Hero (card box — synced with line 570) ---- */
+  /* ---- Hero (card box — synced with line 572) ---- */
   .hero {
     margin: 10px;
     border-radius: 20px;
     padding-top: 0;
     padding-bottom: 0;
+    background: #111111;
   }
   .hero-video-bg,
-  .hero-video-overlay { border-radius: 20px; }
-  .hero-video-bg video {
-    object-position: center center;
-  }
+  .hero-video-overlay { display: none; }
   .hero-inner {
-    padding: 64px 24px 64px 24px;
+    padding: 80px 24px 36px 24px;
     min-height: 0;
     width: 100%;
     margin: 0 !important;
     justify-content: flex-start;
   }
-  .hero-btns { flex-direction: column; align-items: flex-start; width: auto; }
-  .hero-btns .btn { width: auto; justify-content: center; padding: 11px 28px; }
+  .hero-btns { flex-direction: column; align-items: flex-start; width: auto; gap: 8px; }
+  .hero-btns .btn { width: auto; justify-content: center; padding: 10px 26px; }
   .hero-scroll-hint { display: none; }
 
 
