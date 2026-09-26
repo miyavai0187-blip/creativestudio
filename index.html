@@ -58,15 +58,19 @@
   </header>
 
     <section class="hero" id="home">
-    <canvas id="hero-particles"></canvas>
-    <!-- Vertical light beams background -->
-    <div class="hero-beams" aria-hidden="true">
-      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
-      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
-      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
-      <span class="beam"></span><span class="beam"></span><span class="beam"></span>
+
+    <!-- YouTube Video Background -->
+    <div class="hero-video-bg" aria-hidden="true">
+      <iframe
+        src="https://www.youtube.com/embed/_Sl8diqCAFw?autoplay=1&mute=1&loop=1&playlist=_Sl8diqCAFw&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        title="Background Video"
+      ></iframe>
     </div>
-    <div class="hero-center-glow" aria-hidden="true"></div>
+    <!-- Color Overlay -->
+    <div class="hero-video-overlay" aria-hidden="true"></div>
 
     <div class="container hero-inner">
       <!-- Badge -->
@@ -84,7 +88,7 @@
       <!-- Buttons -->
       <div class="hero-btns">
         <a href="#contact" class="btn btn-primary" id="hero-cta">Start a Project</a>
-        <a href="#portfolio" class="btn btn-outline" id="hero-portfolio">View Our Work</a>
+        <a href="portfolio.html" class="btn btn-outline" id="hero-portfolio">View Our Work</a>
       </div>
 
       <!-- Stats -->
