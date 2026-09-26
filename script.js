@@ -484,3 +484,18 @@ document.querySelectorAll('.footer-links').forEach(el => footerObserver.observe(
   });
 })();
 
+
+// ===== CUSTOM BUDGET TOGGLE =====
+function toggleCustomBudget(select) {
+  const customGroup = document.getElementById('custom-budget-group');
+  const customInput = document.getElementById('form-budget-custom');
+  if (select.value === 'custom') {
+    customGroup.style.display = 'block';
+    customInput.setAttribute('required', 'required');
+    customInput.focus();
+  } else {
+    customGroup.style.display = 'none';
+    customInput.removeAttribute('required');
+    customInput.value = '';
+  }
+}
