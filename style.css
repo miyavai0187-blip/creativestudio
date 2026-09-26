@@ -351,7 +351,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   justify-content: flex-start;
   padding-top: 80px;
   overflow: hidden;
-  background: #020208;
+  background: #000000;
 }
 
 /* ===== YOUTUBE VIDEO BACKGROUND ===== */
@@ -578,7 +578,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     border-radius: 20px;
     overflow: hidden;
     padding-top: 0;
-    background: #020208;
+    background: #000000;
   }
   .hero-video-bg {
     border-radius: 20px;
