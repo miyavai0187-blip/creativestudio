@@ -636,11 +636,12 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     margin-bottom: 14px;
   }
   .hero-btns {
+    display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 100%;
     margin-bottom: 16px;
     align-items: stretch;
+    max-width: 280px;
   }
   .hero-btns-row1 {
     display: flex;
@@ -651,16 +652,16 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 8px 10px;
-    font-size: 0.78rem;
+    padding: 7px 6px;
+    font-size: 0.76rem;
     min-width: 0;
     white-space: nowrap;
   }
   .hero-btn-wa {
     width: 100%;
     justify-content: center;
-    padding: 8px 10px;
-    font-size: 0.78rem;
+    padding: 7px 6px;
+    font-size: 0.76rem;
     white-space: nowrap;
   }
   .hero-stats {
