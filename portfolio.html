@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="logo.png" />
-  <link rel="stylesheet" href="style.css?v=99" />
+  <link rel="stylesheet" href="style.css?v=201" />
   <style>
     .pf-page { padding-top: 90px; min-height: 100vh; }
     .pf-hero { text-align:center; padding:60px 0 40px; background:radial-gradient(ellipse at 50% 0%,rgba(106,176,76,0.10) 0%,transparent 60%); }
@@ -42,6 +42,47 @@
       border-bottom: none !important;
     }
     @media(max-width:600px) { .pf-cards { grid-template-columns:1fr; } }
+
+    /* ===== PORTFOLIO PAGE ANIMATIONS ===== */
+    @keyframes pfFadeUp {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pfFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pfScaleIn {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    /* Hero entrance */
+    .pf-hero { animation: pfFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+    .pf-hero-tag  { animation: pfFadeUp 0.6s 0.1s both; }
+    .pf-hero h1   { animation: pfFadeUp 0.7s 0.2s both; }
+    .pf-hero p    { animation: pfFadeUp 0.7s 0.3s both; }
+    /* Filters stagger */
+    .pf-filters   { animation: pfFadeUp 0.7s 0.4s both; }
+    /* Cards animate when in view */
+    .pf-animate {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .pf-animate.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Category header slide */
+    .pf-cat-header.pf-animate { transform: translateX(-20px); }
+    .pf-cat-header.pf-animate.in-view { transform: translateX(0); }
+    /* Placeholder cards scale in */
+    .pf-placeholder.pf-animate {
+      transform: scale(0.94) translateY(20px);
+    }
+    .pf-placeholder.pf-animate.in-view {
+      transform: scale(1) translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -230,8 +271,46 @@
         document.querySelectorAll('.pf-cat').forEach(c => {
           c.classList.toggle('visible', f === 'all' || c.dataset.cat === f);
         });
+        // Re-trigger animations after filter
+        setTimeout(triggerAnimations, 50);
       });
     });
+
+    // ===== SCROLL ANIMATIONS =====
+    function triggerAnimations() {
+      const els = document.querySelectorAll('.pf-animate:not(.in-view)');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('in-view');
+            }, i * 80); // stagger delay
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => observer.observe(el));
+    }
+
+    // Add pf-animate class to all animatable elements
+    document.querySelectorAll('.pf-cat-header, .pf-cat-line, .pf-placeholder, .pf-cat-badge').forEach((el, i) => {
+      el.classList.add('pf-animate');
+      if (el.classList.contains('pf-placeholder')) {
+        el.style.transitionDelay = (i % 4) * 0.07 + 's';
+      }
+    });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.getElementById('nav-links');
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navLinks.classList.toggle('open');
+      });
+    }
+
+    triggerAnimations();
   </script>
 </body>
 </html>
