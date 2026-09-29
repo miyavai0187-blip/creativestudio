@@ -833,6 +833,45 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   100% { transform: translateX(0); }
 }
 
+/* ===== CLIENT LOGOS SECTION ===== */
+.clients-section {
+  background: #000;
+  padding: 48px 0;
+  overflow: hidden;
+}
+.clients-marquee-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+.clients-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+}
+.clients-left  { animation: clientsLeft  28s linear infinite; }
+.clients-right { animation: clientsRight 32s linear infinite; }
+@keyframes clientsLeft  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes clientsRight { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+.client-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.client-name:hover { color: rgba(255,255,255,0.8); }
+.client-dot {
+  color: rgba(255,255,255,0.15);
+  font-size: 0.6rem;
+  flex-shrink: 0;
+}
+
 /* ===== SERVICES ===== */
 .services { background: var(--bg-dark); }
 .services-grid {
