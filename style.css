@@ -517,18 +517,34 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 
 /* Buttons */
 .hero-btns {
-  display: flex; gap: 10px; flex-wrap: wrap;
-  justify-content: flex-start; margin-bottom: 32px;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  margin-bottom: 28px;
+  align-items: flex-start;
 }
+.hero-btns-row1 {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.hero-btns-row1 .btn,
 .hero-btns .btn {
-  padding: 9px 20px;
-  font-size: 0.82rem;
+  padding: 9px 22px;
+  font-size: 0.85rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  min-width: 140px;
+}
+/* WhatsApp full-width row */
+.hero-btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  font-size: 0.85rem;
 }
 /* WhatsApp button — outlined with WA green icon */
 .btn-whatsapp {
@@ -593,7 +609,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     border-radius: 20px;
   }
   .hero-inner {
-    padding: 80px 24px 36px 24px;
+    padding: 72px 20px 28px 20px;
     min-height: 0;
     max-width: 100%;
     width: 100%;
@@ -603,36 +619,47 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .hero-badge {
     font-size: 0.78rem;
     padding: 5px 14px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
-  .hero-title { margin-bottom: 8px; }
+  .hero-title { margin-bottom: 6px; }
   .hero-title-line1 {
-    font-size: clamp(1.7rem, 8vw, 2.6rem);
-    line-height: 1.1;
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.05;
   }
   .hero-title-italic {
-    font-size: clamp(1.7rem, 8vw, 2.6rem);
-    line-height: 1.1;
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.05;
   }
   .hero-sub {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     max-width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .hero-btns {
     flex-direction: column;
-    gap: 10px;
+    gap: 9px;
     width: 100%;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     align-items: stretch;
   }
-  .hero-btns .btn {
+  .hero-btns-row1 {
+    display: flex;
+    gap: 9px;
     width: 100%;
-    min-width: unset;
+  }
+  .hero-btns-row1 .btn {
+    flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 9px 20px;
-    font-size: 0.82rem;
+    padding: 9px 12px;
+    font-size: 0.84rem;
+    min-width: 0;
+  }
+  .hero-btn-wa {
+    width: 100%;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: 0.84rem;
   }
   .hero-stats {
     gap: 12px;
