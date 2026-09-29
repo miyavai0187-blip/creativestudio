@@ -1764,8 +1764,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     margin: 0 !important;
     justify-content: flex-start;
   }
-  .hero-btns { flex-direction: column; align-items: flex-start; width: auto; gap: 8px; }
-  .hero-btns .btn { width: auto; justify-content: center; padding: 10px 26px; }
+  /* hero-btns: see primary block at line 636 */
   .hero-scroll-hint { display: none; }
 
 
