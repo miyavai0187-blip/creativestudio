@@ -594,6 +594,17 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 
 /* Mobile — Hero as rounded card box */
 @media (max-width: 768px) {
+  /* Clients ticker — mobile */
+  .clients-section { padding: 28px 0; }
+  .clients-marquee-wrap { gap: 10px; }
+  .clients-left  { animation: clientsLeft  10s linear infinite; }
+  .clients-right { animation: clientsRight 13s linear infinite; }
+  .client-name {
+    font-size: 0.75rem;
+    padding: 5px 14px;
+  }
+  .client-dot { font-size: 0.75rem; }
+
   .hero {
     min-height: auto;
     height: auto;
