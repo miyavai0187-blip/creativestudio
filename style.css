@@ -651,15 +651,17 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
     flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 6px 8px;
-    font-size: 0.76rem;
+    padding: 8px 10px;
+    font-size: 0.78rem;
     min-width: 0;
+    white-space: nowrap;
   }
   .hero-btn-wa {
     width: 100%;
     justify-content: center;
-    padding: 6px 8px;
-    font-size: 0.76rem;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    white-space: nowrap;
   }
   .hero-stats {
     gap: 12px;
