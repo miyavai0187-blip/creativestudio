@@ -518,10 +518,25 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 .hero-btns {
   display: flex; gap: 12px; flex-wrap: wrap;
   justify-content: flex-start; margin-bottom: 32px;
+  align-items: center;
 }
 .hero-btns .btn {
   padding: 10px 24px;
   font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+/* WhatsApp button — outlined with WA green icon */
+.btn-whatsapp {
+  border-color: rgba(37,211,102,0.5);
+  color: #fff;
+}
+.btn-whatsapp svg { color: #25d366; }
+.btn-whatsapp:hover {
+  border-color: #25d366;
+  background: rgba(37,211,102,0.10);
+  color: #fff;
 }
 
 /* Stats */
@@ -603,15 +618,16 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   }
   .hero-btns {
     flex-direction: column;
-    gap: 8px;
-    width: auto;
+    gap: 11px;
+    width: 100%;
     margin-bottom: 18px;
+    align-items: stretch;
   }
   .hero-btns .btn {
-    width: auto;
+    width: 100%;
     text-align: center;
     justify-content: center;
-    padding: 10px 26px;
+    padding: 12px 24px;
   }
   .hero-stats {
     gap: 12px;
