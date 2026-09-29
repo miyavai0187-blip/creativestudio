@@ -449,13 +449,14 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   justify-content: flex-end;
   position: relative;
   z-index: 2;
-  padding: 0 32px 60px 48px;
-  max-width: 700px;
+  padding: 100px 32px 60px 48px;
+  max-width: 780px;
   width: 100%;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   text-align: left;
   margin-left: 0 !important;
   margin-right: auto !important;
+  overflow: visible;
 }
 
 /* Badge */
@@ -529,12 +530,12 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 }
 /* WhatsApp button — outlined with WA green icon */
 .btn-whatsapp {
-  border-color: rgba(37,211,102,0.5);
+  border: 2px solid rgba(37,211,102,0.5) !important;
   color: #fff;
 }
 .btn-whatsapp svg { color: #25d366; }
 .btn-whatsapp:hover {
-  border-color: #25d366;
+  border-color: #25d366 !important;
   background: rgba(37,211,102,0.10);
   color: #fff;
 }
