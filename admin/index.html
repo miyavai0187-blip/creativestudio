@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel — CreativeStudio</title>
+<style>
+:root{
+  --bg:#0a0a0f;--sidebar:#0f0f1a;--card:#141425;--border:#1e1e35;
+  --primary:#79b32b;--primary-dark:#5a8a1e;--danger:#e74c3c;--warn:#f39c12;
+  --text:#e8e8f0;--muted:#7a7a9a;--input:#1a1a2e;
+  --radius:12px;--transition:.2s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;}
+
+/* ── Login Screen ── */
+#login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;background-image:radial-gradient(ellipse at 30% 20%,rgba(121,179,43,.12) 0%,transparent 60%);}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:100%;max-width:400px;text-align:center;}
+.login-logo{font-size:1.8rem;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#79b32b,#a5d44e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.login-sub{color:var(--muted);font-size:.9rem;margin-bottom:32px;}
+.login-box input{width:100%;background:var(--input);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:.95rem;outline:none;transition:border-color var(--transition);margin-bottom:12px;}
+.login-box input:focus{border-color:var(--primary);}
+.btn-login{width:100%;background:linear-gradient(135deg,#79b32b,#a5d44e);border:none;border-radius:10px;padding:13px;color:#000;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity var(--transition);margin-top:4px;}
+.btn-login:hover{opacity:.9;}
+.login-error{color:var(--danger);font-size:.85rem;margin-top:8px;display:none;}
+
+/* ── Sidebar ── */
+#sidebar{width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;transition:transform .3s;}
+.sidebar-brand{padding:24px 20px;border-bottom:1px solid var(--border);}
+.sidebar-brand .brand-name{font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,#79b32b,#a5d44e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sidebar-brand .brand-sub{color:var(--muted);font-size:.75rem;margin-top:2px;}
+.sidebar-nav{flex:1;padding:12px 10px;overflow-y:auto;}
+.nav-group{margin-bottom:20px;}
+.nav-group-label{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 10px;margin-bottom:6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all var(--transition);color:var(--muted);font-size:.88rem;font-weight:500;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover{background:rgba(121,179,43,.08);color:var(--text);}
+.nav-item.active{background:rgba(121,179,43,.15);color:var(--primary);font-weight:600;}
+.nav-item .icon{font-size:1rem;width:20px;text-align:center;}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border);}
+.sidebar-footer .site-url{font-size:.72rem;color:var(--muted);word-break:break-all;margin-bottom:10px;}
+.btn-logout{width:100%;background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.3);border-radius:8px;padding:8px;color:var(--danger);font-size:.83rem;cursor:pointer;transition:all var(--transition);}
+.btn-logout:hover{background:rgba(231,76,60,.2);}
+
+/* ── Main content ── */
+#main{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow:hidden;}
+.topbar{background:var(--sidebar);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-title{font-weight:700;font-size:1rem;}
+.topbar-actions{display:flex;gap:10px;align-items:center;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all var(--transition);}
+.btn-primary{background:linear-gradient(135deg,#79b32b,#a5d44e);color:#000;}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);}
+.btn-danger{background:rgba(231,76,60,.15);border:1px solid rgba(231,76,60,.3);color:var(--danger);}
+.btn-danger:hover{background:rgba(231,76,60,.25);}
+.btn-sm{padding:6px 12px;font-size:.78rem;}
+.btn-icon{padding:7px;width:34px;height:34px;justify-content:center;}
+
+.content-area{flex:1;overflow-y:auto;padding:28px;}
+
+/* ── Panel sections ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── Cards ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.card-title{font-size:1rem;font-weight:700;}
+.card-subtitle{font-size:.8rem;color:var(--muted);margin-top:2px;}
+
+/* ── Form elements ── */
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em;}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:.9rem;font-family:inherit;outline:none;transition:border-color var(--transition);}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--primary);}
+.form-textarea{resize:vertical;min-height:90px;line-height:1.6;}
+.form-select{cursor:pointer;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.form-hint{font-size:.75rem;color:var(--muted);margin-top:5px;}
+
+/* ── Image picker ── */
+.img-picker{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all var(--transition);position:relative;min-height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.img-picker:hover{border-color:var(--primary);background:rgba(121,179,43,.04);}
+.img-picker img{max-height:120px;border-radius:8px;object-fit:cover;width:100%;}
+.img-picker .pick-text{font-size:.82rem;color:var(--muted);}
+.img-picker input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
+
+/* ── Stats list ── */
+.stat-list,.link-list,.service-list,.testi-list{display:flex;flex-direction:column;gap:10px;}
+.stat-item,.link-item,.service-item,.testi-item{background:var(--input);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:flex-start;}
+.stat-item .fields,.link-item .fields,.service-item .fields,.testi-item .fields{flex:1;display:grid;gap:8px;}
+.stat-item .fields.two-col{grid-template-columns:1fr 1fr;}
+.item-actions{display:flex;gap:6px;flex-shrink:0;}
+.btn-add{width:100%;background:rgba(121,179,43,.06);border:1px dashed rgba(121,179,43,.4);border-radius:10px;padding:10px;color:var(--primary);font-size:.85rem;cursor:pointer;transition:all var(--transition);}
+.btn-add:hover{background:rgba(121,179,43,.12);}
+
+/* ── Portfolio grid ── */
+.pf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+.pf-card{background:var(--input);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all var(--transition);}
+.pf-card:hover{border-color:rgba(121,179,43,.4);transform:translateY(-2px);}
+.pf-thumb{aspect-ratio:16/9;background:#111;position:relative;overflow:hidden;}
+.pf-thumb img,.pf-thumb video{width:100%;height:100%;object-fit:cover;}
+.pf-thumb .pf-badge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:3px 8px;border-radius:50px;}
+.pf-card-body{padding:14px;}
+.pf-card-title{font-weight:700;font-size:.9rem;margin-bottom:4px;}
+.pf-card-cat{font-size:.75rem;color:var(--primary);margin-bottom:10px;}
+.pf-card-actions{display:flex;gap:6px;}
+.hidden-badge{opacity:.5;}
+
+/* ── Media library ── */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.media-item{border-radius:10px;overflow:hidden;background:var(--input);border:1px solid var(--border);cursor:pointer;transition:all var(--transition);position:relative;}
+.media-item:hover{border-color:var(--primary);}
+.media-item img,.media-item video{width:100%;aspect-ratio:1;object-fit:cover;}
+.media-item .media-name{font-size:.65rem;color:var(--muted);padding:6px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.media-item .media-del{position:absolute;top:4px;right:4px;background:rgba(231,76,60,.8);border:none;border-radius:6px;color:#fff;width:24px;height:24px;cursor:pointer;display:none;font-size:.75rem;}
+.media-item:hover .media-del{display:flex;align-items:center;justify-content:center;}
+.media-item.selected{border-color:var(--primary);outline:3px solid var(--primary);}
+
+/* ── Section reorder ── */
+.section-list{display:flex;flex-direction:column;gap:8px;}
+.section-row{background:var(--input);border:1px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:grab;transition:all var(--transition);}
+.section-row:active{cursor:grabbing;opacity:.7;}
+.section-row.dragging{opacity:.4;}
+.section-row.drag-over{border-color:var(--primary);background:rgba(121,179,43,.08);}
+.section-row .drag-handle{color:var(--muted);font-size:1.1rem;cursor:grab;}
+.section-row .s-name{flex:1;font-weight:600;}
+.section-toggle{width:44px;height:24px;background:var(--border);border-radius:50px;position:relative;cursor:pointer;transition:background var(--transition);border:none;flex-shrink:0;}
+.section-toggle.on{background:var(--primary);}
+.section-toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform var(--transition);}
+.section-toggle.on::after{transform:translateX(20px);}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+.toast-msg{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 20px;font-size:.88rem;box-shadow:0 8px 30px rgba(0,0,0,.4);display:flex;align-items:center;gap:10px;animation:toastIn .3s ease;}
+.toast-msg.success{border-color:var(--primary);}
+.toast-msg.error{border-color:var(--danger);}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:28px;}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-size:1.1rem;font-weight:700;}
+.modal-close{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px;}
+
+/* ── Live Preview btn ── */
+.preview-bar{background:rgba(121,179,43,.08);border:1px solid rgba(121,179,43,.2);border-radius:10px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.preview-note{font-size:.83rem;color:var(--muted);}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  #sidebar{position:fixed;left:-240px;z-index:100;height:100vh;}
+  #sidebar.open{transform:translateX(240px);}
+  .form-row,.form-row-3{grid-template-columns:1fr;}
+  .pf-grid{grid-template-columns:1fr 1fr;}
+}
+
+.section-icon{font-size:.95rem;}
+.badge{display:inline-block;padding:2px 8px;border-radius:50px;font-size:.7rem;font-weight:600;}
+.badge-green{background:rgba(121,179,43,.15);color:var(--primary);}
+.badge-gray{background:rgba(255,255,255,.07);color:var(--muted);}
+.color-pick-wrap{display:flex;align-items:center;gap:10px;}
+.color-pick-wrap input[type=color]{width:44px;height:36px;border:1px solid var(--border);border-radius:8px;background:none;cursor:pointer;padding:2px;}
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.tag-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.tag-chip{background:rgba(121,179,43,.1);border:1px solid rgba(121,179,43,.3);border-radius:50px;padding:4px 12px;font-size:.78rem;display:flex;align-items:center;gap:6px;color:var(--text);}
+.tag-chip .rm{cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🎬 CreativeStudio</div>
+    <p class="login-sub">Admin Panel — Sign in to continue</p>
+    <input type="text" id="login-user" placeholder="Username" value="admin"/>
+    <input type="password" id="login-pass" placeholder="Password" value=""/>
+    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+    <p class="login-error" id="login-err"></p>
+  </div>
+</div>
+
+<!-- ══ SIDEBAR ═══════════════════════════════════════════════════════════ -->
+<div id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-name">🎬 CreativeStudio</div>
+    <div class="brand-sub">Admin Panel</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <button class="nav-item active" onclick="showPanel('dashboard')"><span class="icon">📊</span>Dashboard</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Content</div>
+      <button class="nav-item" onclick="showPanel('hero')"><span class="icon">🏠</span>Hero Section</button>
+      <button class="nav-item" onclick="showPanel('ticker')"><span class="icon">🎞️</span>Service Ticker</button>
+      <button class="nav-item" onclick="showPanel('about')"><span class="icon">👥</span>About Us</button>
+      <button class="nav-item" onclick="showPanel('services')"><span class="icon">⚙️</span>Services</button>
+      <button class="nav-item" onclick="showPanel('testimonials')"><span class="icon">💬</span>Testimonials</button>
+      <button class="nav-item" onclick="showPanel('contact')"><span class="icon">📞</span>Contact</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Media & Portfolio</div>
+      <button class="nav-item" onclick="showPanel('portfolio')"><span class="icon">🎨</span>Portfolio</button>
+      <button class="nav-item" onclick="showPanel('media')"><span class="icon">🖼️</span>Media Library</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Site</div>
+      <button class="nav-item" onclick="showPanel('navbar')"><span class="icon">🔗</span>Navbar & Footer</button>
+      <button class="nav-item" onclick="showPanel('sections')"><span class="icon">📋</span>Section Order</button>
+      <button class="nav-item" onclick="showPanel('settings')"><span class="icon">⚙️</span>Settings</button>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="site-url" id="site-url-display">Loading...</div>
+    <button class="btn-logout" onclick="doLogout()">🚪 Sign Out</button>
+  </div>
+</div>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════════════════════ -->
+<div id="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button class="btn btn-outline btn-icon" id="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <span class="topbar-title" id="panel-title">Dashboard</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="/" target="_blank" class="btn btn-outline btn-sm">👁️ Preview Site</a>
+      <button class="btn btn-primary btn-sm" onclick="publishAll()">🚀 Save & Publish</button>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="preview-bar">
+        <span class="preview-note">📢 Changes are saved to database. Click <strong>Save & Publish</strong> to make them live on the website.</span>
+        <a href="/" target="_blank" class="btn btn-outline btn-sm">Open Site →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:24px;">
+        <div class="card" style="margin:0;text-align:center;cursor:pointer;" onclick="showPanel('portfolio')">
+          <div style="font-size:2rem;margin-bottom:8px;">🎨</div>
+          <div id="stat-pf-count" style="font-size:1.8rem;font-weight:800;color:var(--primary)">0</div>
+          <div style="color:var(--muted);font-size:.8rem;">Portfolio Items</div>
+        </div>
+        <div class="card" style="margin:0;text-align:center;cursor:pointer;" onclick="showPanel('media')">
+          <div style="font-size:2rem;margin-bottom:8px;">🖼️</div>
+          <div id="stat-media-count" style="font-size:1.8rem;font-weight:800;color:var(--primary)">0</div>
+          <div style="color:var(--muted);font-size:.8rem;">Media Files</div>
+        </div>
+        <div class="card" style="margin:0;text-align:center;">
+          <div style="font-size:2rem;margin-bottom:8px;">📝</div>
+          <div style="font-size:1.8rem;font-weight:800;color:var(--primary)">8</div>
+          <div style="color:var(--muted);font-size:.8rem;">Site Sections</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><div class="card-title">Quick Access</div><div class="card-subtitle">Jump to frequently edited sections</div></div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <button class="btn btn-outline" onclick="showPanel('hero')">🏠 Edit Hero</button>
+          <button class="btn btn-outline" onclick="showPanel('portfolio')">🎨 Add Portfolio Item</button>
+          <button class="btn btn-outline" onclick="showPanel('contact')">📞 Update Contact</button>
+          <button class="btn btn-outline" onclick="showPanel('services')">⚙️ Edit Services</button>
+          <button class="btn btn-outline" onclick="showPanel('navbar')">🔗 Navbar & Footer</button>
+          <button class="btn btn-outline" onclick="showPanel('media')">🖼️ Media Library</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HERO ══ -->
+    <div class="panel" id="panel-hero">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Hero Section</div><button class="btn btn-primary btn-sm" onclick="saveSection('hero')">💾 Save</button></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Badge Text</label><input class="form-input" id="hero-badge" placeholder="Digital Creative Agency"/></div>
+          <div class="form-group"><label class="form-label">WhatsApp Number</label><input class="form-input" id="hero-whatsapp" placeholder="8801613595594"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Title Line 1</label><input class="form-input" id="hero-title1" placeholder="YOUR BUSINESS,"/></div>
+        <div class="form-group"><label class="form-label">Title Line 2 (Green Italic)</label><input class="form-input" id="hero-title2" placeholder="OUR RESPONSIBILITY"/></div>
+        <div class="form-group"><label class="form-label">Subtitle</label><textarea class="form-textarea" id="hero-subtitle" rows="2"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Button 1 Text</label><input class="form-input" id="hero-btn1text" placeholder="Book Now"/></div>
+          <div class="form-group"><label class="form-label">Button 1 Link</label><input class="form-input" id="hero-btn1href" placeholder="#contact"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Button 2 Text</label><input class="form-input" id="hero-btn2text" placeholder="View Work"/></div>
+          <div class="form-group"><label class="form-label">Button 2 Link</label><input class="form-input" id="hero-btn2href" placeholder="portfolio.html"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">WhatsApp Button Text</label><input class="form-input" id="hero-watext" placeholder="WhatsApp Live Chat"/></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Background Media</div></div>
+        <div class="form-group">
+          <label class="form-label">YouTube Video URL (Background)</label>
+          <input class="form-input" id="hero-bgvideo" placeholder="https://www.youtube.com/watch?v=..."/>
+          <div class="form-hint">Leave empty to use background image</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Background Image</label>
+          <div class="img-picker" id="hero-bg-picker">
+            <img id="hero-bg-preview" src="" style="display:none"/>
+            <div class="pick-text">📁 Click to upload background image</div>
+            <input type="file" accept="image/*" onchange="uploadImage(this,'hero-bg-preview','hero-bgimage')"/>
+          </div>
+          <input type="hidden" id="hero-bgimage"/>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Stats</div><button class="btn btn-outline btn-sm" onclick="addStat()">+ Add Stat</button></div>
+        <div class="stat-list" id="stat-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ TICKER ══ -->
+    <div class="panel" id="panel-ticker">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Service Ticker</div><button class="btn btn-primary btn-sm" onclick="saveSection('ticker')">💾 Save</button></div>
+        <div class="form-group">
+          <label class="form-label">Visibility</label>
+          <select class="form-select" id="ticker-visible">
+            <option value="true">Visible</option>
+            <option value="false">Hidden</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ticker Items</label>
+          <div class="form-hint" style="margin-bottom:10px;">Add each service on a new line or press Enter</div>
+          <div class="tag-chips" id="ticker-chips"></div>
+          <div style="display:flex;gap:8px;margin-top:10px;">
+            <input class="form-input" id="ticker-input" placeholder="Add service..." onkeydown="if(event.key==='Enter'){addTickerItem();event.preventDefault();}"/>
+            <button class="btn btn-outline" onclick="addTickerItem()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ABOUT ══ -->
+    <div class="panel" id="panel-about">
+      <div class="card">
+        <div class="card-header"><div class="card-title">About Us Section</div><button class="btn btn-primary btn-sm" onclick="saveSection('about')">💾 Save</button></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Section Tag</label><input class="form-input" id="about-tag" placeholder="About Us"/></div>
+          <div class="form-group"><label class="form-label">Heading</label><input class="form-input" id="about-heading" placeholder="We craft digital experiences that"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Heading Highlight (Green)</label><input class="form-input" id="about-headhighlight" placeholder="elevate brands"/></div>
+        <div class="form-group"><label class="form-label">Description Text</label><textarea class="form-textarea" id="about-text" rows="4"></textarea></div>
+        <div class="form-group">
+          <label class="form-label">YouTube Video URL (About Video)</label>
+          <input class="form-input" id="about-video" placeholder="https://www.youtube.com/embed/..."/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Team Image</label>
+          <div class="img-picker" id="about-img-picker">
+            <img id="about-img-preview" src="" style="display:none;max-height:120px;"/>
+            <div class="pick-text">📁 Click to upload team image</div>
+            <input type="file" accept="image/*" onchange="uploadImage(this,'about-img-preview','about-teamimage')"/>
+          </div>
+          <input type="hidden" id="about-teamimage"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SERVICES ══ -->
+    <div class="panel" id="panel-services">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Services</div><div class="card-subtitle">Drag to reorder</div></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="addService()">+ Add</button>
+            <button class="btn btn-primary btn-sm" onclick="saveSection('services')">💾 Save</button>
+          </div>
+        </div>
+        <div class="form-row" style="margin-bottom:20px;">
+          <div class="form-group"><label class="form-label">Section Tag</label><input class="form-input" id="svc-tag"/></div>
+          <div class="form-group"><label class="form-label">Heading</label><input class="form-input" id="svc-heading"/></div>
+          <div class="form-group"><label class="form-label">Heading Highlight</label><input class="form-input" id="svc-headhighlight"/></div>
+        </div>
+        <div class="service-list" id="service-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ TESTIMONIALS ══ -->
+    <div class="panel" id="panel-testimonials">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Testimonials</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline btn-sm" onclick="addTestimonial()">+ Add</button>
+            <button class="btn btn-primary btn-sm" onclick="saveSection('testimonials')">💾 Save</button>
+          </div>
+        </div>
+        <div class="testi-list" id="testi-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ CONTACT ══ -->
+    <div class="panel" id="panel-contact">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Contact Info</div><button class="btn btn-primary btn-sm" onclick="saveSection('contact')">💾 Save</button></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="contact-phone"/></div>
+          <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="contact-email"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="contact-address"/></div>
+          <div class="form-group"><label class="form-label">WhatsApp Number</label><input class="form-input" id="contact-whatsapp" placeholder="8801613595594"/></div>
+        </div>
+        <div class="divider"></div>
+        <div class="card-title" style="margin-bottom:16px;">Social Links</div>
+        <div class="link-list" id="social-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ PORTFOLIO ══ -->
+    <div class="panel" id="panel-portfolio">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Portfolio Items</div><div class="card-subtitle">Add, edit, reorder portfolio entries</div></div>
+          <button class="btn btn-primary btn-sm" onclick="openPortfolioModal()">+ Add Item</button>
+        </div>
+        <div class="pf-grid" id="pf-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ MEDIA LIBRARY ══ -->
+    <div class="panel" id="panel-media">
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">Media Library</div><div class="card-subtitle">All uploaded images & videos</div></div>
+          <label class="btn btn-primary btn-sm" style="cursor:pointer;">
+            📁 Upload Files
+            <input type="file" multiple accept="image/*,video/*" style="display:none" onchange="uploadMultiple(this)"/>
+          </label>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
+          <button class="btn btn-outline btn-sm" onclick="loadMedia('all')">All</button>
+          <button class="btn btn-outline btn-sm" onclick="loadMedia('image')">Images</button>
+          <button class="btn btn-outline btn-sm" onclick="loadMedia('video')">Videos</button>
+        </div>
+        <div class="media-grid" id="media-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══ NAVBAR & FOOTER ══ -->
+    <div class="panel" id="panel-navbar">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Navbar</div><button class="btn btn-primary btn-sm" onclick="saveNavbar()">💾 Save</button></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">CTA Button Text</label><input class="form-input" id="nav-cta-text"/></div>
+          <div class="form-group"><label class="form-label">CTA Button Link</label><input class="form-input" id="nav-cta-href"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Logo</label>
+          <div class="img-picker">
+            <img id="nav-logo-preview" src="" style="display:none;max-height:60px;"/>
+            <div class="pick-text">📁 Upload logo</div>
+            <input type="file" accept="image/*" onchange="uploadImage(this,'nav-logo-preview','nav-logo-url')"/>
+          </div>
+          <input type="hidden" id="nav-logo-url"/>
+        </div>
+        <div class="divider"></div>
+        <div class="card-title" style="margin-bottom:12px;">Nav Links</div>
+        <div class="link-list" id="nav-link-list"></div>
+        <button class="btn-add" onclick="addNavLink()" style="margin-top:10px;">+ Add Link</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Footer</div><button class="btn btn-primary btn-sm" onclick="saveFooter()">💾 Save</button></div>
+        <div class="form-group"><label class="form-label">Tagline</label><input class="form-input" id="footer-tagline"/></div>
+        <div class="form-group"><label class="form-label">Copyright Text</label><input class="form-input" id="footer-copy"/></div>
+      </div>
+    </div>
+
+    <!-- ══ SECTIONS ORDER ══ -->
+    <div class="panel" id="panel-sections">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Section Order & Visibility</div><button class="btn btn-primary btn-sm" onclick="saveSections()">💾 Save</button></div>
+        <p style="color:var(--muted);font-size:.84rem;margin-bottom:16px;">Drag sections to reorder. Toggle switch to show/hide.</p>
+        <div class="section-list" id="section-order-list"></div>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS ══ -->
+    <div class="panel" id="panel-settings">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Change Password</div></div>
+        <div class="form-group"><label class="form-label">Current Password</label><input type="password" class="form-input" id="cp-current"/></div>
+        <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-input" id="cp-new"/></div>
+        <div class="form-group"><label class="form-label">Confirm New Password</label><input type="password" class="form-input" id="cp-confirm"/></div>
+        <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+</div><!-- /main -->
+
+<!-- ══ PORTFOLIO MODAL ═══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="pf-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="pf-modal-title">Add Portfolio Item</div>
+      <button class="modal-close" onclick="closeModal('pf-modal')">✕</button>
+    </div>
+    <input type="hidden" id="pf-edit-id"/>
+    <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="pf-title"/></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="pf-category">
+          <option value="commercial">Commercial Production</option>
+          <option value="promotional">Promotional Videos</option>
+          <option value="content">Content Creation</option>
+          <option value="documentary">Documentary</option>
+          <option value="social">Social Media</option>
+          <option value="photography">Product & Photography</option>
+          <option value="advertising">Advertising</option>
+          <option value="motion">Motion Graphics</option>
+          <option value="creative">Creative Projects</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Media Type</label>
+        <select class="form-select" id="pf-mediatype" onchange="togglePfMedia()">
+          <option value="image">Image</option>
+          <option value="video">Video (Upload)</option>
+          <option value="youtube">YouTube</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="pf-desc" rows="2"></textarea></div>
+    <div class="form-group">
+      <label class="form-label">Thumbnail</label>
+      <div class="img-picker" style="height:80px;">
+        <img id="pf-thumb-preview" src="" style="display:none;max-height:70px;"/>
+        <div class="pick-text">📁 Upload thumbnail</div>
+        <input type="file" id="pf-thumb-file" accept="image/*" onchange="previewFile(this,'pf-thumb-preview')"/>
+      </div>
+    </div>
+    <div class="form-group" id="pf-media-upload">
+      <label class="form-label">Media (Image/Video)</label>
+      <div class="img-picker" style="height:80px;">
+        <div class="pick-text">📁 Upload media file</div>
+        <input type="file" id="pf-media-file" accept="image/*,video/*"/>
+      </div>
+    </div>
+    <div class="form-group" id="pf-youtube-input" style="display:none;">
+      <label class="form-label">YouTube URL</label>
+      <input class="form-input" id="pf-youtube-url" placeholder="https://www.youtube.com/watch?v=..."/>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="savePortfolioItem()">Save Item</button>
+      <button class="btn btn-outline" onclick="closeModal('pf-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ════════════════════════════════════════════════════════════ -->
+<div id="toast"></div>
+
+<script>
+const API = '';
+let siteData = {};
+let portfolioItems = [];
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const username = document.getElementById('login-user').value;
+  const password = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+  try {
+    const r = await fetch('/api/auth/login', {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username, password})
+    });
+    const d = await r.json();
+    if (d.success) {
+      document.getElementById('login-screen').style.display = 'none';
+      initAdmin();
+    } else {
+      err.textContent = d.error || 'Login failed'; err.style.display = 'block';
+    }
+  } catch(e) { err.textContent = 'Connection error'; err.style.display = 'block'; }
+}
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+async function doLogout() {
+  await fetch('/api/auth/logout', {method:'POST', credentials:'include'});
+  location.reload();
+}
+
+async function checkAuth() {
+  try {
+    const r = await fetch('/api/auth/verify', {credentials:'include'});
+    const d = await r.json();
+    if (d.success) { document.getElementById('login-screen').style.display='none'; initAdmin(); }
+  } catch(e) {}
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+async function initAdmin() {
+  document.getElementById('site-url-display').textContent = location.origin;
+  await loadSiteData();
+  await loadPortfolio();
+  await loadDashboardStats();
+  populateAll();
+}
+
+async function loadSiteData() {
+  const r = await fetch('/api/content', {credentials:'include'});
+  siteData = await r.json();
+}
+
+async function loadDashboardStats() {
+  try {
+    const r = await fetch('/api/portfolio', {credentials:'include'});
+    const items = await r.json();
+    document.getElementById('stat-pf-count').textContent = items.length;
+    const mr = await fetch('/api/media', {credentials:'include'});
+    const md = await mr.json();
+    document.getElementById('stat-media-count').textContent = md.total || 0;
+  } catch(e){}
+}
+
+// ── Panels ────────────────────────────────────────────────────────────────
+const PANEL_TITLES = {
+  dashboard:'Dashboard', hero:'Hero Section', ticker:'Service Ticker',
+  about:'About Us', services:'Services', testimonials:'Testimonials',
+  contact:'Contact', portfolio:'Portfolio', media:'Media Library',
+  navbar:'Navbar & Footer', sections:'Section Order', settings:'Settings'
+};
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.textContent.toLowerCase().includes(PANEL_TITLES[id]?.toLowerCase().split(' ')[0]?.toLowerCase() || '')) n.classList.add('active');
+  });
+  document.getElementById('panel-title').textContent = PANEL_TITLES[id] || id;
+  // Lazy load
+  if (id === 'media') loadMedia('all');
+  if (id === 'portfolio') loadPortfolio().then(renderPortfolio);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ── Populate all sections ─────────────────────────────────────────────────
+function populateAll() {
+  populateHero();
+  populateTicker();
+  populateAbout();
+  populateServices();
+  populateTestimonials();
+  populateContact();
+  populateNavbar();
+  populateSections();
+}
+
+// ── HERO ──────────────────────────────────────────────────────────────────
+function populateHero() {
+  const h = siteData.hero || {};
+  setValue('hero-badge', h.badge);
+  setValue('hero-title1', h.titleLine1);
+  setValue('hero-title2', h.titleLine2);
+  setValue('hero-subtitle', h.subtitle);
+  setValue('hero-btn1text', h.btn1Text);
+  setValue('hero-btn1href', h.btn1Href);
+  setValue('hero-btn2text', h.btn2Text);
+  setValue('hero-btn2href', h.btn2Href);
+  setValue('hero-watext', h.whatsappText);
+  setValue('hero-whatsapp', h.whatsappNumber);
+  setValue('hero-bgvideo', h.backgroundVideo);
+  setValue('hero-bgimage', h.backgroundImage);
+  if (h.backgroundImage) showImgPreview('hero-bg-preview', h.backgroundImage);
+  renderStats(h.stats || []);
+}
+
+function renderStats(stats) {
+  const list = document.getElementById('stat-list');
+  list.innerHTML = '';
+  stats.forEach((s, i) => {
+    list.innerHTML += `<div class="stat-item">
+      <div class="fields two-col">
+        <input class="form-input" placeholder="Number" value="${s.number||''}" oninput="updateStat(${i},'number',this.value)"/>
+        <input class="form-input" placeholder="Suffix (+, %)" value="${s.suffix||''}" oninput="updateStat(${i},'suffix',this.value)"/>
+        <input class="form-input" placeholder="Label" value="${s.label||''}" oninput="updateStat(${i},'label',this.value)" style="grid-column:span 2"/>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-danger btn-icon" onclick="removeStat(${i})">✕</button>
+      </div>
+    </div>`;
+  });
+}
+
+function updateStat(i, key, val) {
+  if (!siteData.hero.stats) siteData.hero.stats = [];
+  siteData.hero.stats[i][key] = val;
+}
+function addStat() {
+  if (!siteData.hero) siteData.hero = {};
+  if (!siteData.hero.stats) siteData.hero.stats = [];
+  siteData.hero.stats.push({number:'0', suffix:'+', label:'New Stat'});
+  renderStats(siteData.hero.stats);
+}
+function removeStat(i) {
+  siteData.hero.stats.splice(i, 1);
+  renderStats(siteData.hero.stats);
+}
+
+async function saveSection(key) {
+  let data = {};
+  if (key === 'hero') {
+    data = {
+      ...siteData.hero,
+      badge: val('hero-badge'), titleLine1: val('hero-title1'),
+      titleLine2: val('hero-title2'), subtitle: val('hero-subtitle'),
+      btn1Text: val('hero-btn1text'), btn1Href: val('hero-btn1href'),
+      btn2Text: val('hero-btn2text'), btn2Href: val('hero-btn2href'),
+      whatsappText: val('hero-watext'), whatsappNumber: val('hero-whatsapp'),
+      backgroundVideo: val('hero-bgvideo'), backgroundImage: val('hero-bgimage')
+    };
+  } else if (key === 'ticker') {
+    data = { visible: document.getElementById('ticker-visible').value === 'true', items: siteData.ticker?.items || [] };
+  } else if (key === 'about') {
+    data = { ...siteData.about,
+      tag: val('about-tag'), heading: val('about-heading'),
+      headingHighlight: val('about-headhighlight'), text: val('about-text'),
+      videoUrl: val('about-video'), teamImage: val('about-teamimage') || siteData.about?.teamImage
+    };
+  } else if (key === 'services') {
+    data = { ...siteData.services, tag: val('svc-tag'), heading: val('svc-heading'),
+      headingHighlight: val('svc-headhighlight') };
+  } else if (key === 'testimonials') {
+    data = siteData.testimonials;
+  } else if (key === 'contact') {
+    data = { ...siteData.contact,
+      phone: val('contact-phone'), email: val('contact-email'),
+      address: val('contact-address'), whatsapp: val('contact-whatsapp')
+    };
+  }
+  try {
+    const r = await fetch(`/api/content/${key}`, {
+      method:'PUT', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+    const d = await r.json();
+    if (d.success) { siteData[key] = data; toast('✅ Saved!', 'success'); }
+    else toast('❌ '+d.error, 'error');
+  } catch(e) { toast('❌ Save failed', 'error'); }
+}
+
+// ── TICKER ────────────────────────────────────────────────────────────────
+function populateTicker() {
+  const t = siteData.ticker || {};
+  document.getElementById('ticker-visible').value = t.visible !== false ? 'true' : 'false';
+  renderTickerChips(t.items || []);
+}
+function renderTickerChips(items) {
+  const c = document.getElementById('ticker-chips');
+  c.innerHTML = items.map((item,i) =>
+    `<div class="tag-chip">${item}<span class="rm" onclick="removeTickerItem(${i})">×</span></div>`
+  ).join('');
+}
+function addTickerItem() {
+  const inp = document.getElementById('ticker-input');
+  const v = inp.value.trim();
+  if (!v) return;
+  if (!siteData.ticker) siteData.ticker = {visible:true, items:[]};
+  if (!siteData.ticker.items) siteData.ticker.items = [];
+  siteData.ticker.items.push(v);
+  renderTickerChips(siteData.ticker.items);
+  inp.value = '';
+}
+function removeTickerItem(i) {
+  siteData.ticker.items.splice(i, 1);
+  renderTickerChips(siteData.ticker.items);
+}
+
+// ── ABOUT ─────────────────────────────────────────────────────────────────
+function populateAbout() {
+  const a = siteData.about || {};
+  setValue('about-tag', a.tag); setValue('about-heading', a.heading);
+  setValue('about-headhighlight', a.headingHighlight); setValue('about-text', a.text);
+  setValue('about-video', a.videoUrl); setValue('about-teamimage', a.teamImage);
+  if (a.teamImage) showImgPreview('about-img-preview', a.teamImage);
+}
+
+// ── SERVICES ──────────────────────────────────────────────────────────────
+function populateServices() {
+  const s = siteData.services || {};
+  setValue('svc-tag', s.tag); setValue('svc-heading', s.heading);
+  setValue('svc-headhighlight', s.headingHighlight);
+  renderServices(s.items || []);
+}
+function renderServices(items) {
+  const list = document.getElementById('service-list');
+  list.innerHTML = items.map((s, i) => `
+    <div class="service-item">
+      <div class="fields" style="grid-template-columns:60px 1fr 1fr">
+        <input class="form-input" placeholder="Icon" value="${s.icon||''}" oninput="updateService(${i},'icon',this.value)"/>
+        <input class="form-input" placeholder="Title" value="${s.title||''}" oninput="updateService(${i},'title',this.value)"/>
+        <textarea class="form-textarea" placeholder="Description" rows="2" oninput="updateService(${i},'desc',this.value)" style="min-height:60px;">${s.desc||''}</textarea>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-danger btn-icon" onclick="removeService(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+function updateService(i, key, val) { if (siteData.services?.items) siteData.services.items[i][key] = val; }
+function addService() {
+  if (!siteData.services?.items) siteData.services.items = [];
+  siteData.services.items.push({icon:'⭐', title:'New Service', desc:'Service description'});
+  renderServices(siteData.services.items);
+}
+function removeService(i) { siteData.services.items.splice(i,1); renderServices(siteData.services.items); }
+
+// ── TESTIMONIALS ──────────────────────────────────────────────────────────
+function populateTestimonials() {
+  const t = siteData.testimonials || {};
+  renderTestimonials(t.items || []);
+}
+function renderTestimonials(items) {
+  const list = document.getElementById('testi-list');
+  list.innerHTML = items.map((t, i) => `
+    <div class="testi-item">
+      <div class="fields">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <input class="form-input" placeholder="Name" value="${t.name||''}" oninput="updateTesti(${i},'name',this.value)"/>
+          <input class="form-input" placeholder="Role / Company" value="${t.role||''}" oninput="updateTesti(${i},'role',this.value)"/>
+        </div>
+        <textarea class="form-textarea" placeholder="Testimonial text" rows="2" oninput="updateTesti(${i},'text',this.value)" style="min-height:60px;">${t.text||''}</textarea>
+      </div>
+      <div class="item-actions">
+        <button class="btn btn-danger btn-icon" onclick="removeTesti(${i})">✕</button>
+      </div>
+    </div>`).join('');
+}
+function updateTesti(i, key, v) { if (siteData.testimonials?.items) siteData.testimonials.items[i][key] = v; }
+function addTestimonial() {
+  if (!siteData.testimonials?.items) siteData.testimonials = {items:[]};
+  const initials = 'AB';
+  siteData.testimonials.items.push({name:'New Client', role:'Company', text:'Great service!', initials, color:'#79b32b'});
+  renderTestimonials(siteData.testimonials.items);
+}
+function removeTesti(i) { siteData.testimonials.items.splice(i,1); renderTestimonials(siteData.testimonials.items); }
+
+// ── CONTACT ───────────────────────────────────────────────────────────────
+function populateContact() {
+  const c = siteData.contact || {};
+  setValue('contact-phone', c.phone); setValue('contact-email', c.email);
+  setValue('contact-address', c.address); setValue('contact-whatsapp', c.whatsapp);
+  renderSocialLinks(c.socials || []);
+}
+function renderSocialLinks(links) {
+  const list = document.getElementById('social-list');
+  list.innerHTML = links.map((l, i) => `
+    <div class="link-item">
+      <div class="fields" style="grid-template-columns:1fr 2fr">
+        <input class="form-input" placeholder="Platform" value="${l.platform||''}" oninput="updateSocial(${i},'platform',this.value)"/>
+        <input class="form-input" placeholder="URL" value="${l.url||''}" oninput="updateSocial(${i},'url',this.value)"/>
+      </div>
+      <div class="item-actions"><button class="btn btn-danger btn-icon" onclick="removeSocial(${i})">✕</button></div>
+    </div>`).join('');
+  const addBtn = document.createElement('button');
+  addBtn.className = 'btn-add'; addBtn.textContent = '+ Add Social Link';
+  addBtn.onclick = addSocial;
+  list.appendChild(addBtn);
+}
+function updateSocial(i, key, v) { if (siteData.contact?.socials) siteData.contact.socials[i][key] = v; }
+function addSocial() {
+  if (!siteData.contact?.socials) siteData.contact.socials = [];
+  siteData.contact.socials.push({platform:'Platform', url:'#', icon:'fb'});
+  populateContact();
+}
+function removeSocial(i) { siteData.contact.socials.splice(i,1); renderSocialLinks(siteData.contact.socials); }
+
+// ── NAVBAR ────────────────────────────────────────────────────────────────
+function populateNavbar() {
+  const n = siteData.navbar || {};
+  setValue('nav-cta-text', n.ctaText); setValue('nav-cta-href', n.ctaHref);
+  setValue('nav-logo-url', n.logo);
+  if (n.logo) showImgPreview('nav-logo-preview', n.logo);
+  renderNavLinks(n.links || []);
+  const f = siteData.footer || {};
+  setValue('footer-tagline', f.tagline); setValue('footer-copy', f.copyright);
+}
+function renderNavLinks(links) {
+  const list = document.getElementById('nav-link-list');
+  list.innerHTML = links.map((l, i) => `
+    <div class="link-item">
+      <div class="fields" style="grid-template-columns:1fr 2fr">
+        <input class="form-input" placeholder="Label" value="${l.label||''}" oninput="updateNavLink(${i},'label',this.value)"/>
+        <input class="form-input" placeholder="URL" value="${l.href||''}" oninput="updateNavLink(${i},'href',this.value)"/>
+      </div>
+      <div class="item-actions"><button class="btn btn-danger btn-icon" onclick="removeNavLink(${i})">✕</button></div>
+    </div>`).join('');
+}
+function updateNavLink(i, key, v) { if (siteData.navbar?.links) siteData.navbar.links[i][key] = v; }
+function addNavLink() {
+  if (!siteData.navbar?.links) siteData.navbar.links = [];
+  siteData.navbar.links.push({label:'New Link', href:'#'});
+  renderNavLinks(siteData.navbar.links);
+}
+function removeNavLink(i) { siteData.navbar.links.splice(i,1); renderNavLinks(siteData.navbar.links); }
+
+async function saveNavbar() {
+  const navData = { ...siteData.navbar, ctaText: val('nav-cta-text'), ctaHref: val('nav-cta-href'), logo: val('nav-logo-url') || siteData.navbar?.logo };
+  const footerData = { ...siteData.footer, tagline: val('footer-tagline'), copyright: val('footer-copy') };
+  await Promise.all([
+    fetch('/api/content/navbar', {method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(navData)}),
+    fetch('/api/content/footer', {method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(footerData)})
+  ]);
+  siteData.navbar = navData; siteData.footer = footerData;
+  toast('✅ Navbar & Footer saved!', 'success');
+}
+
+async function saveFooter() { await saveNavbar(); }
+
+// ── SECTIONS ──────────────────────────────────────────────────────────────
+const SECTION_NAMES = {hero:'Hero',ticker:'Ticker',about:'About Us',services:'Services',portfolio:'Portfolio',videos:'Videos',testimonials:'Testimonials',contact:'Contact'};
+const SECTION_ICONS = {hero:'🏠',ticker:'🎞️',about:'👥',services:'⚙️',portfolio:'🎨',videos:'🎬',testimonials:'💬',contact:'📞'};
+
+function populateSections() {
+  const sec = siteData.sections || {};
+  const order = sec.order || Object.keys(SECTION_NAMES);
+  const vis = sec.visibility || {};
+  const list = document.getElementById('section-order-list');
+  list.innerHTML = order.map(key => `
+    <div class="section-row" draggable="true" data-key="${key}" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropSection(event)">
+      <span class="drag-handle">⠿</span>
+      <span class="section-icon">${SECTION_ICONS[key]||'📄'}</span>
+      <span class="s-name">${SECTION_NAMES[key]||key}</span>
+      <button class="section-toggle ${vis[key]!==false?'on':''}" data-key="${key}" onclick="toggleSection(this,'${key}')"></button>
+    </div>`).join('');
+}
+
+function toggleSection(btn, key) {
+  btn.classList.toggle('on');
+  if (!siteData.sections) siteData.sections = {order:[],visibility:{}};
+  siteData.sections.visibility[key] = btn.classList.contains('on');
+}
+
+let dragSrc = null;
+function dragStart(e) { dragSrc = e.currentTarget; e.currentTarget.classList.add('dragging'); }
+function dragOver(e) { e.preventDefault(); document.querySelectorAll('.section-row').forEach(r=>r.classList.remove('drag-over')); e.currentTarget.classList.add('drag-over'); }
+function dropSection(e) {
+  e.preventDefault();
+  const target = e.currentTarget;
+  target.classList.remove('drag-over');
+  if (dragSrc && dragSrc !== target) {
+    const list = document.getElementById('section-order-list');
+    const rows = [...list.children];
+    const si = rows.indexOf(dragSrc), ti = rows.indexOf(target);
+    if (si < ti) list.insertBefore(dragSrc, target.nextSibling);
+    else list.insertBefore(dragSrc, target);
+  }
+  dragSrc?.classList.remove('dragging');
+  dragSrc = null;
+}
+
+async function saveSections() {
+  const rows = document.querySelectorAll('.section-row');
+  const order = [...rows].map(r => r.dataset.key);
+  const visibility = {};
+  rows.forEach(r => { visibility[r.dataset.key] = r.querySelector('.section-toggle').classList.contains('on'); });
+  const data = {order, visibility};
+  await fetch('/api/content/sections', {method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  siteData.sections = data;
+  toast('✅ Section order saved!', 'success');
+}
+
+// ── PORTFOLIO ─────────────────────────────────────────────────────────────
+async function loadPortfolio() {
+  const r = await fetch('/api/portfolio', {credentials:'include'});
+  portfolioItems = await r.json();
+}
+function renderPortfolio() {
+  const grid = document.getElementById('pf-grid');
+  grid.innerHTML = portfolioItems.length ? portfolioItems.map(item => `
+    <div class="pf-card ${!item.visible?'hidden-badge':''}">
+      <div class="pf-thumb">
+        ${item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.title}"/>` :
+          item.media_type==='youtube' ? `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#111;color:#fff;font-size:2rem;">▶</div>` :
+          `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#111;color:var(--muted);font-size:.8rem;">No thumbnail</div>`}
+        <span class="pf-badge">${item.category}</span>
+      </div>
+      <div class="pf-card-body">
+        <div class="pf-card-title">${item.title}</div>
+        <div class="pf-card-cat">${item.category}</div>
+        <div class="pf-card-actions">
+          <button class="btn btn-outline btn-sm" onclick="editPortfolioItem(${item.id})">✏️ Edit</button>
+          <button class="btn btn-outline btn-sm" onclick="togglePfVisible(${item.id})">${item.visible?'🙈 Hide':'👁️ Show'}</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePfItem(${item.id})">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('') : '<p style="color:var(--muted);text-align:center;padding:40px;">No portfolio items yet. Click "+ Add Item" to get started.</p>';
+}
+
+function openPortfolioModal(id) {
+  document.getElementById('pf-modal-title').textContent = id ? 'Edit Portfolio Item' : 'Add Portfolio Item';
+  document.getElementById('pf-edit-id').value = id || '';
+  document.getElementById('pf-title').value = '';
+  document.getElementById('pf-desc').value = '';
+  document.getElementById('pf-thumb-preview').style.display = 'none';
+  document.getElementById('pf-youtube-url').value = '';
+  document.getElementById('pf-modal').classList.add('open');
+}
+
+function editPortfolioItem(id) {
+  const item = portfolioItems.find(i => i.id === id);
+  if (!item) return;
+  document.getElementById('pf-modal-title').textContent = 'Edit Portfolio Item';
+  document.getElementById('pf-edit-id').value = id;
+  document.getElementById('pf-title').value = item.title || '';
+  document.getElementById('pf-category').value = item.category || 'commercial';
+  document.getElementById('pf-mediatype').value = item.media_type || 'image';
+  document.getElementById('pf-desc').value = item.description || '';
+  if (item.thumbnail) { showImgPreview('pf-thumb-preview', item.thumbnail); }
+  if (item.media_type === 'youtube') document.getElementById('pf-youtube-url').value = item.media_url || '';
+  togglePfMedia();
+  document.getElementById('pf-modal').classList.add('open');
+}
+
+function togglePfMedia() {
+  const type = document.getElementById('pf-mediatype').value;
+  document.getElementById('pf-media-upload').style.display = type === 'youtube' ? 'none' : 'block';
+  document.getElementById('pf-youtube-input').style.display = type === 'youtube' ? 'block' : 'none';
+}
+
+async function savePortfolioItem() {
+  const id = document.getElementById('pf-edit-id').value;
+  const formData = new FormData();
+  formData.append('title', val('pf-title'));
+  formData.append('category', document.getElementById('pf-category').value);
+  formData.append('description', val('pf-desc'));
+  formData.append('media_type', document.getElementById('pf-mediatype').value);
+  const ytUrl = val('pf-youtube-url');
+  if (ytUrl) formData.append('youtube_url', ytUrl);
+  const thumbFile = document.getElementById('pf-thumb-file').files[0];
+  if (thumbFile) formData.append('thumbnail', thumbFile);
+  const mediaFile = document.getElementById('pf-media-file').files[0];
+  if (mediaFile) formData.append('media', mediaFile);
+
+  const url = id ? `/api/portfolio/${id}` : '/api/portfolio';
+  const method = id ? 'PUT' : 'POST';
+  const r = await fetch(url, {method, credentials:'include', body: formData});
+  const d = await r.json();
+  if (d.success) {
+    closeModal('pf-modal');
+    await loadPortfolio();
+    renderPortfolio();
+    toast('✅ Portfolio item saved!', 'success');
+  } else { toast('❌ '+d.error, 'error'); }
+}
+
+async function togglePfVisible(id) {
+  await fetch(`/api/portfolio/${id}/toggle`, {method:'PATCH', credentials:'include'});
+  await loadPortfolio(); renderPortfolio();
+}
+
+async function deletePfItem(id) {
+  if (!confirm('Delete this portfolio item?')) return;
+  await fetch(`/api/portfolio/${id}`, {method:'DELETE', credentials:'include'});
+  await loadPortfolio(); renderPortfolio();
+  toast('🗑️ Deleted', 'success');
+}
+
+// ── MEDIA LIBRARY ─────────────────────────────────────────────────────────
+async function loadMedia(type = 'all') {
+  const url = type === 'all' ? '/api/media' : `/api/media?type=${type}`;
+  const r = await fetch(url, {credentials:'include'});
+  const d = await r.json();
+  const grid = document.getElementById('media-grid');
+  grid.innerHTML = (d.items || []).map(m => `
+    <div class="media-item" title="${m.original_name}">
+      ${m.mime_type?.startsWith('video') ?
+        `<video src="${m.url}" muted></video>` :
+        `<img src="${m.url}" loading="lazy"/>`}
+      <div class="media-name">${m.original_name}</div>
+      <button class="media-del" onclick="deleteMedia(${m.id},event)">✕</button>
+    </div>`).join('') || '<p style="color:var(--muted);padding:20px;">No media uploaded yet.</p>';
+}
+
+async function deleteMedia(id, e) {
+  e.stopPropagation();
+  if (!confirm('Delete this file?')) return;
+  await fetch(`/api/media/${id}`, {method:'DELETE', credentials:'include'});
+  loadMedia('all');
+  toast('🗑️ Deleted', 'success');
+}
+
+async function uploadMultiple(input) {
+  const files = input.files;
+  if (!files.length) return;
+  const formData = new FormData();
+  [...files].forEach(f => formData.append('files', f));
+  const r = await fetch('/api/media/upload-multiple', {method:'POST', credentials:'include', body:formData});
+  const d = await r.json();
+  if (d.success) { loadMedia('all'); toast(`✅ ${d.files.length} file(s) uploaded!`, 'success'); }
+  else toast('❌ Upload failed', 'error');
+}
+
+// ── Image upload helper ────────────────────────────────────────────────────
+async function uploadImage(input, previewId, hiddenId) {
+  const file = input.files[0];
+  if (!file) return;
+  const formData = new FormData();
+  formData.append('file', file);
+  const r = await fetch('/api/media/upload', {method:'POST', credentials:'include', body:formData});
+  const d = await r.json();
+  if (d.success) {
+    showImgPreview(previewId, d.url);
+    if (hiddenId) document.getElementById(hiddenId).value = d.url;
+    toast('✅ Image uploaded!', 'success');
+  } else toast('❌ Upload failed', 'error');
+}
+
+function previewFile(input, previewId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => showImgPreview(previewId, e.target.result);
+  reader.readAsDataURL(file);
+}
+
+function showImgPreview(id, src) {
+  const el = document.getElementById(id);
+  if (el) { el.src = src; el.style.display = 'block'; }
+}
+
+// ── Publish all ────────────────────────────────────────────────────────────
+async function publishAll() {
+  try {
+    const r = await fetch('/api/content/publish', {
+      method:'POST', credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(siteData)
+    });
+    const d = await r.json();
+    if (d.success) toast('🚀 Published! Changes are live.', 'success');
+    else toast('❌ '+d.error, 'error');
+  } catch(e) { toast('❌ Publish failed', 'error'); }
+}
+
+// ── Settings ───────────────────────────────────────────────────────────────
+async function changePassword() {
+  const cur = document.getElementById('cp-current').value;
+  const nw = document.getElementById('cp-new').value;
+  const cf = document.getElementById('cp-confirm').value;
+  if (nw !== cf) return toast('❌ Passwords do not match', 'error');
+  const r = await fetch('/api/auth/change-password', {
+    method:'POST', credentials:'include',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({currentPassword:cur, newPassword:nw})
+  });
+  const d = await r.json();
+  d.success ? toast('✅ Password changed!', 'success') : toast('❌ '+d.error, 'error');
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const t = document.createElement('div');
+  t.className = `toast-msg ${type}`;
+  t.textContent = msg;
+  document.getElementById('toast').appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function val(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+function setValue(id, v) { const el = document.getElementById(id); if (el && v !== undefined) el.value = v || ''; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ── Boot ───────────────────────────────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>
