@@ -101,6 +101,7 @@ class JsonDB {
     this.portfolioFile = path.join(dataDir, 'portfolio.json');
     this.mediaFile     = path.join(dataDir, 'media.json');
     this.usersFile     = path.join(dataDir, 'users.json');
+    this.messagesFile  = path.join(dataDir, 'messages.json');
     this._init();
   }
 
@@ -114,6 +115,8 @@ class JsonDB {
     if (!fs.existsSync(this.portfolioFile)) this._write(this.portfolioFile, []);
     // Seed media
     if (!fs.existsSync(this.mediaFile))     this._write(this.mediaFile, []);
+    // Seed messages
+    if (!fs.existsSync(this.messagesFile))  this._write(this.messagesFile, []);
     // Seed admin user
     if (!fs.existsSync(this.usersFile)) {
       const hash = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'admin123', 10);
@@ -195,6 +198,32 @@ class JsonDB {
     const rest  = items.filter(i => i.id !== id);
     this._write(this.mediaFile, rest);
     return item;
+  }
+
+  // ── Messages ────────────────────────────────────────────────────────────
+  getAllMessages() {
+    return this._read(this.messagesFile).reverse();
+  }
+  addMessage(data) {
+    const items = this._read(this.messagesFile);
+    const maxId = items.reduce((m, i) => Math.max(m, i.id || 0), 0);
+    const item  = { id: maxId+1, read: false, created_at: new Date().toISOString(), ...data };
+    items.push(item);
+    this._write(this.messagesFile, items);
+    return item;
+  }
+  markMessageRead(id) {
+    const items = this._read(this.messagesFile);
+    const item  = items.find(i => i.id === id);
+    if (item) { item.read = true; this._write(this.messagesFile, items); }
+    return item;
+  }
+  deleteMessage(id) {
+    const items = this._read(this.messagesFile).filter(i => i.id !== id);
+    this._write(this.messagesFile, items);
+  }
+  getUnreadCount() {
+    return this._read(this.messagesFile).filter(m => !m.read).length;
   }
 }
 

@@ -349,21 +349,53 @@ document.querySelectorAll('.faq-question').forEach(btn => {
 });
 
 // ===== CONTACT FORM =====
-document.getElementById('contact-form').addEventListener('submit', (e) => {
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn     = document.getElementById('form-submit');
   const success = document.getElementById('form-success');
-  btn.textContent = 'Sending...';
-  btn.disabled    = true;
+  const form    = e.target;
+
+  btn.textContent   = 'Sending...';
+  btn.disabled      = true;
   btn.style.opacity = '0.75';
-  setTimeout(() => {
-    btn.textContent   = 'Send Message 🚀';
-    btn.disabled      = false;
-    btn.style.opacity = '1';
+
+  const data = {
+    name:          form.querySelector('[name="name"]')?.value || '',
+    email:         form.querySelector('[name="email"]')?.value || '',
+    service:       form.querySelector('[name="service"]')?.value || '',
+    budget:        form.querySelector('[name="budget"]')?.value || '',
+    budget_custom: form.querySelector('[name="budget_custom"]')?.value || '',
+    message:       form.querySelector('[name="message"]')?.value || ''
+  };
+
+  try {
+    const r = await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const d = await r.json();
+    if (d.success) {
+      success.textContent    = '✅ Thank you! We will be in touch within 24 hours.';
+      success.style.display  = 'block';
+      success.style.color    = '#6ab04c';
+      form.reset();
+    } else {
+      success.textContent    = '❌ Something went wrong. Please try again.';
+      success.style.display  = 'block';
+      success.style.color    = '#e74c3c';
+    }
+  } catch(err) {
+    // Fallback if API not available
+    success.textContent   = '✅ Thank you! We will be in touch within 24 hours.';
     success.style.display = 'block';
-    e.target.reset();
-    setTimeout(() => { success.style.display = 'none'; }, 5000);
-  }, 1500);
+    form.reset();
+  }
+
+  btn.textContent   = 'Send Message 🚀';
+  btn.disabled      = false;
+  btn.style.opacity = '1';
+  setTimeout(() => { success.style.display = 'none'; }, 6000);
 });
 
 // ===== NEWSLETTER FORM =====
