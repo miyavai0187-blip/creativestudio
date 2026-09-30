@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -761,5 +761,70 @@
 
   <a href="#home" class="back-to-top" id="back-to-top" aria-label="Back to top">&#8679;</a>
   <script src="script.js?v=6"></script>
+
+  <!-- CMS Content Hydration -->
+  <script>
+  (async function cmsHydrate() {
+    try {
+      const r = await fetch('/api/content');
+      if (!r.ok) return;
+      const d = await r.json();
+      const setText = (sel, txt) => { const el = document.querySelector(sel); if (el && txt !== undefined) el.textContent = txt; };
+      const setAttr = (sel, attr, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute(attr, val); };
+
+      // HERO
+      const h = d.hero || {};
+      if (h.badge) { const b = document.querySelector('.hero-badge'); if(b) b.innerHTML = '<span class="badge-dot"></span>' + h.badge; }
+      if (h.titleLine1) setText('.hero-title-line1', h.titleLine1);
+      if (h.titleLine2) setText('.hero-title-italic', h.titleLine2);
+      if (h.subtitle) setText('.hero-sub', h.subtitle);
+      if (h.btn1Text) setText('#hero-portfolio', h.btn1Text);
+      if (h.btn1Href) setAttr('#hero-portfolio', 'href', h.btn1Href);
+      if (h.whatsappNumber) document.querySelectorAll('a[href*="wa.me"]').forEach(el => el.href = 'https://wa.me/' + h.whatsappNumber);
+      if (h.whatsappText) { const wa = document.querySelector('.hero-btn-wa'); if(wa) { const svg = wa.querySelector('svg'); wa.textContent = ' ' + h.whatsappText; if(svg) wa.prepend(svg); } }
+      if (h.stats) {
+        const nums = document.querySelectorAll('.stat-num');
+        const plus = document.querySelectorAll('.stat-plus');
+        const lbl  = document.querySelectorAll('.stat-label');
+        h.stats.forEach((s,i) => {
+          if(nums[i]) { nums[i].textContent = s.number; nums[i].setAttribute('data-target', s.number); }
+          if(plus[i]) plus[i].textContent = s.suffix;
+          if(lbl[i])  lbl[i].textContent  = s.label;
+        });
+      }
+
+      // TICKER
+      const t = d.ticker || {};
+      if (t.visible === false) { const ts = document.querySelector('.clients-section'); if(ts) ts.style.display='none'; }
+      if (t.items?.length) {
+        document.querySelectorAll('.clients-track').forEach(track => {
+          const items = [...t.items, ...t.items];
+          track.innerHTML = items.map(item => `<span class="client-name">${item}</span><span class="client-dot">+</span>`).join('');
+        });
+      }
+
+      // CONTACT
+      const c = d.contact || {};
+      if (c.phone) document.querySelectorAll('a[href^="tel:"]').forEach(el => { el.href='tel:'+c.phone.replace(/\s/g,''); el.textContent=c.phone; });
+      if (c.email) document.querySelectorAll('a[href^="mailto:"]').forEach(el => { el.href='mailto:'+c.email; el.textContent=c.email; });
+      if (c.whatsapp) document.querySelectorAll('a[href*="wa.me"]').forEach(el => el.href='https://wa.me/'+c.whatsapp);
+
+      // NAVBAR & FOOTER
+      const nav = d.navbar || {};
+      if (nav.ctaText) setText('#nav-cta-btn', nav.ctaText);
+      if (nav.ctaHref) setAttr('#nav-cta-btn', 'href', nav.ctaHref);
+      const f = d.footer || {};
+      if (f.copyright) setText('.footer-bottom p', f.copyright);
+
+      // SECTION VISIBILITY
+      const sec = d.sections?.visibility || {};
+      const MAP = { about:'#about', services:'#services', testimonials:'#testimonials', contact:'#contact', ticker:'.clients-section', videos:'#videos' };
+      Object.entries(MAP).forEach(([key, sel]) => {
+        if (sec[key] === false) document.querySelectorAll(sel).forEach(el => el.style.display='none');
+      });
+
+    } catch(e) { /* static fallback */ }
+  })();
+  <\/script>
 </body>
 </html>
