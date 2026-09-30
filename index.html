@@ -780,6 +780,14 @@
       if (h.subtitle) setText('.hero-sub', h.subtitle);
       if (h.btn1Text) setText('#hero-portfolio', h.btn1Text);
       if (h.btn1Href) setAttr('#hero-portfolio', 'href', h.btn1Href);
+      // UPDATE HERO VIDEO BACKGROUND
+      const heroVidEl = document.querySelector('.hero-video-bg video');
+      const heroVidSrc = document.querySelector('.hero-video-bg source');
+      if (heroVidEl && h.backgroundVideo && h.backgroundVideo.startsWith('/uploads/')) {
+        if (heroVidSrc) heroVidSrc.src = h.backgroundVideo;
+        heroVidEl.src = h.backgroundVideo;
+        heroVidEl.load();
+      }
       if (h.whatsappNumber) document.querySelectorAll('a[href*="wa.me"]').forEach(el => el.href = 'https://wa.me/' + h.whatsappNumber);
       if (h.whatsappText) { const wa = document.querySelector('.hero-btn-wa'); if(wa) { const svg = wa.querySelector('svg'); wa.textContent = ' ' + h.whatsappText; if(svg) wa.prepend(svg); } }
       if (h.stats) {
@@ -828,4 +836,5 @@
   </script>
 </body>
 </html>
+
 

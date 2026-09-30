@@ -307,21 +307,46 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Background Media</div></div>
+        <div class="card-header"><div class="card-title">🎬 Background Media</div></div>
+
+        <!-- Media type toggle -->
         <div class="form-group">
-          <label class="form-label">YouTube Video URL (Background)</label>
-          <input class="form-input" id="hero-bgvideo" placeholder="https://www.youtube.com/watch?v=..."/>
-          <div class="form-hint">Leave empty to use background image</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Background Image</label>
-          <div class="img-picker" id="hero-bg-picker">
-            <img id="hero-bg-preview" src="" style="display:none"/>
-            <div class="pick-text">📁 Click to upload background image</div>
-            <input type="file" accept="image/*" onchange="uploadImage(this,'hero-bg-preview','hero-bgimage')"/>
+          <label class="form-label">Background Type</label>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-sm" id="bg-type-video" style="flex:1;background:rgba(121,179,43,.15);border:1px solid var(--primary);color:var(--primary);" onclick="setBgType('video')">🎬 Video Upload</button>
+            <button class="btn btn-outline btn-sm" id="bg-type-image" style="flex:1;" onclick="setBgType('image')">🖼️ Image</button>
           </div>
-          <input type="hidden" id="hero-bgimage"/>
         </div>
+
+        <!-- Video Upload -->
+        <div id="bg-video-section">
+          <div class="form-group">
+            <label class="form-label">Upload Background Video</label>
+            <div class="img-picker" id="hero-vid-picker" style="min-height:110px;" onclick="document.getElementById('hero-vid-file').click()">
+              <video id="hero-vid-preview" style="display:none;max-height:120px;width:100%;border-radius:8px;" muted playsinline></video>
+              <div class="pick-text" id="hero-vid-text">📁 Click to upload video (MP4, max 200MB)</div>
+            </div>
+            <input type="file" id="hero-vid-file" accept="video/mp4,video/webm,video/*" style="display:none" onchange="uploadHeroVideo(this)"/>
+            <input type="hidden" id="hero-bgvideo-url"/>
+            <div class="form-hint">⚡ Video will autoplay muted on loop as background</div>
+          </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div id="bg-image-section" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Background Image</label>
+            <div class="img-picker" id="hero-bg-picker">
+              <img id="hero-bg-preview" src="" style="display:none"/>
+              <div class="pick-text">📁 Click to upload background image</div>
+              <input type="file" accept="image/*" onchange="uploadImage(this,'hero-bg-preview','hero-bgimage')"/>
+            </div>
+            <input type="hidden" id="hero-bgimage"/>
+          </div>
+        </div>
+
+        <!-- Hidden: legacy YouTube field (kept for backward compat) -->
+        <input type="hidden" id="hero-bgvideo"/>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-title">Stats</div><button class="btn btn-outline btn-sm" onclick="addStat()">+ Add Stat</button></div>
@@ -705,6 +730,17 @@ function populateHero() {
   setValue('hero-bgvideo', h.backgroundVideo);
   setValue('hero-bgimage', h.backgroundImage);
   if (h.backgroundImage) showImgPreview('hero-bg-preview', h.backgroundImage);
+  // If existing video, show it
+  if (h.backgroundVideo && h.backgroundVideo.startsWith('/uploads/')) {
+    const vidEl = document.getElementById('hero-vid-preview');
+    const textEl = document.getElementById('hero-vid-text');
+    if(vidEl){ vidEl.src = h.backgroundVideo; vidEl.style.display='block'; }
+    if(textEl) textEl.textContent = '✅ ' + h.backgroundVideo.split('/').pop();
+    document.getElementById('hero-bgvideo-url').value = h.backgroundVideo;
+    setBgType('video');
+  } else if (h.backgroundImage) {
+    setBgType('image');
+  }
   renderStats(h.stats || []);
 }
 
@@ -743,6 +779,8 @@ function removeStat(i) {
 async function saveSection(key) {
   let data = {};
   if (key === 'hero') {
+    const uploadedVideoUrl = val('hero-bgvideo-url');
+    const bgVideo = uploadedVideoUrl || val('hero-bgvideo');
     data = {
       ...siteData.hero,
       badge: val('hero-badge'), titleLine1: val('hero-title1'),
@@ -750,7 +788,7 @@ async function saveSection(key) {
       btn1Text: val('hero-btn1text'), btn1Href: val('hero-btn1href'),
       btn2Text: val('hero-btn2text'), btn2Href: val('hero-btn2href'),
       whatsappText: val('hero-watext'), whatsappNumber: val('hero-whatsapp'),
-      backgroundVideo: val('hero-bgvideo'), backgroundImage: val('hero-bgimage')
+      backgroundVideo: bgVideo, backgroundImage: val('hero-bgimage')
     };
   } else if (key === 'ticker') {
     data = { visible: document.getElementById('ticker-visible').value === 'true', items: siteData.ticker?.items || [] };
@@ -1147,6 +1185,50 @@ async function uploadImage(input, previewId, hiddenId) {
     if (hiddenId) document.getElementById(hiddenId).value = d.url;
     toast('✅ Image uploaded!', 'success');
   } else toast('❌ Upload failed', 'error');
+}
+
+// ── Hero Video Upload ──────────────────────────────────────────────────────
+async function uploadHeroVideo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const textEl = document.getElementById('hero-vid-text');
+  const vidEl  = document.getElementById('hero-vid-preview');
+  textEl.textContent = '⏳ Uploading video... please wait';
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const r = await fetch('/api/media/upload', {method:'POST', credentials:'include', body:formData});
+    const d = await r.json();
+    if (d.success) {
+      document.getElementById('hero-bgvideo-url').value = d.url;
+      vidEl.src = d.url;
+      vidEl.style.display = 'block';
+      textEl.textContent  = '✅ ' + file.name;
+      toast('✅ Video uploaded!', 'success');
+    } else {
+      textEl.textContent = '❌ Upload failed — try again';
+      toast('❌ Video upload failed', 'error');
+    }
+  } catch(e) {
+    textEl.textContent = '❌ Upload error';
+    toast('❌ Upload error', 'error');
+  }
+}
+
+function setBgType(type) {
+  const videoSec = document.getElementById('bg-video-section');
+  const imageSec = document.getElementById('bg-image-section');
+  const btnV = document.getElementById('bg-type-video');
+  const btnI = document.getElementById('bg-type-image');
+  if (type === 'video') {
+    videoSec.style.display = ''; imageSec.style.display = 'none';
+    btnV.style.background = 'rgba(121,179,43,.15)'; btnV.style.borderColor = 'var(--primary)'; btnV.style.color = 'var(--primary)';
+    btnI.style.background = ''; btnI.style.borderColor = ''; btnI.style.color = '';
+  } else {
+    videoSec.style.display = 'none'; imageSec.style.display = '';
+    btnI.style.background = 'rgba(121,179,43,.15)'; btnI.style.borderColor = 'var(--primary)'; btnI.style.color = 'var(--primary)';
+    btnV.style.background = ''; btnV.style.borderColor = ''; btnV.style.color = '';
+  }
 }
 
 function previewFile(input, previewId) {
