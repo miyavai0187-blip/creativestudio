@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -280,6 +280,8 @@
       const catMap={commercial:'commercial',promotional:'promo',promo:'promo',content:'content',documentary:'documentary',social:'social',photography:'product',product:'product',advertising:'advertising',motion:'motion',creative:'creative'};
       const grouped={};
       visible.forEach(item=>{const cat=catMap[item.category]||item.category;if(!grouped[cat])grouped[cat]=[];grouped[cat].push(item);});
+
+      // Populate items into categories
       document.querySelectorAll('.pf-cat').forEach(section=>{
         const cat=section.dataset.cat;
         const catItems=grouped[cat];
@@ -301,6 +303,18 @@
           }
         }).join('');
       });
+
+      // ── REORDER: sections with items → top, Coming Soon → bottom ──
+      const container=document.querySelector('.pf-page .container');
+      if(container){
+        const allSections=[...document.querySelectorAll('.pf-cat')];
+        const withItems=allSections.filter(s=>grouped[catMap[s.dataset.cat]||s.dataset.cat]?.length>0);
+        const withoutItems=allSections.filter(s=>!grouped[catMap[s.dataset.cat]||s.dataset.cat]?.length);
+        // Re-append in order: items first, coming soon last
+        withItems.forEach(s=>container.appendChild(s));
+        withoutItems.forEach(s=>container.appendChild(s));
+      }
+
     }catch(e){}
   })();
   function openPfLightboxVideo(src){const lb=document.getElementById('pf-lightbox');const vid=document.getElementById('pf-lightbox-video');const img=document.getElementById('pf-lightbox-img');vid.src=src;vid.style.display='block';img.style.display='none';lb.style.display='flex';}
