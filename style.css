@@ -947,7 +947,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 .service-link:hover { letter-spacing: 0.5px; }
 
 /* ===== ABOUT ===== */
-.about { background: #080f04; }
+.about { background: #111111; }
 
 /* Split layout: video left, text right */
 .about-split {
@@ -1914,4 +1914,5 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .nav-logo-img { height: 31px; }
   .navbar.scrolled .nav-logo-img { height: 28px; }
 }
+
 
