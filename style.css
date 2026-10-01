@@ -327,8 +327,8 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   min-height: 100vh;
   position: relative;
   display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   padding-top: 60px;
   overflow: hidden;
   background: #000000;
@@ -442,7 +442,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   pointer-events: none; opacity: 0.35;
 }
 
-/* Hero content — left aligned */
+/* Hero content — left aligned inside centered container */
 .hero-inner {
   display: flex;
   flex-direction: column;
@@ -450,13 +450,12 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   justify-content: center;
   position: relative;
   z-index: 2;
-  padding: 80px 48px 40px 48px;
-  max-width: 900px;
+  padding: 80px 48px 60px 48px;
+  max-width: 1200px;
   width: 100%;
   min-height: 100vh;
   text-align: left;
-  margin-left: 0;
-  margin-right: auto;
+  margin: 0 auto;
   overflow: visible;
 }
 
