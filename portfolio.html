@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -294,12 +294,12 @@
           const isVideo=item.media_type==='video'||(item.thumbnail&&/\.(mp4|mov|webm)(\?|$)/i.test(item.thumbnail));
           const src=item.thumbnail||item.media_url||'';
           if(isVideo){
-            return `<div class="pf-real-card pf-animate" onclick="openPfLightboxVideo('${src}')"><div class="pf-real-vid-wrap"><video src="${src}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;"></video><div class="pf-play-overlay"><button class="pf-play-btn">&#9654;</button></div></div><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
+            return `<div class="pf-real-card" onclick="openPfLightboxVideo('${src}')"><div class="pf-real-vid-wrap"><video src="${src}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;"></video><div class="pf-play-overlay"><button class="pf-play-btn">&#9654;</button></div></div><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
           } else if(item.youtube_url){
             const ytId=item.youtube_url.match(/(?:v=|youtu\.be\/)([^&?/]+)/)?.[1]||'';
-            return `<div class="pf-real-card pf-animate" onclick="window.open('https://www.youtube.com/watch?v=${ytId}','_blank')"><img class="pf-real-thumb" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div></div></div>`;
+            return `<div class="pf-real-card" onclick="window.open('https://www.youtube.com/watch?v=${ytId}','_blank')"><img class="pf-real-thumb" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div></div></div>`;
           } else {
-            return `<div class="pf-real-card pf-animate" onclick="openPfLightboxImg('${src}')"><img class="pf-real-thumb" src="${src}" alt="${item.title||''}" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
+            return `<div class="pf-real-card" onclick="openPfLightboxImg('${src}')"><img class="pf-real-thumb" src="${src}" alt="${item.title||''}" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
           }
         }).join('');
       });
@@ -313,6 +313,8 @@
         // Re-append in order: items first, coming soon last
         withItems.forEach(s=>container.appendChild(s));
         withoutItems.forEach(s=>container.appendChild(s));
+        // Re-trigger animations after DOM reorder
+        setTimeout(()=>{if(typeof triggerAnimations==="function")triggerAnimations();},100);
       }
 
     }catch(e){}
@@ -411,4 +413,5 @@
   </script>
 </body>
 </html>
+
 
