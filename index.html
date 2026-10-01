@@ -396,8 +396,6 @@
       background-size: cover !important;
       background-position: center !important;
       position: relative;
-      display: flex !important;
-      align-items: flex-end !important;
     }
     .pf-img-card .pf-card-inner::before {
       content: '';
@@ -405,12 +403,13 @@
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
       border-radius: inherit;
+      z-index: 0;
     }
-    .pf-img-card .pf-card-info { position: relative; z-index: 1; width: 100%; padding: 10px 12px 12px; }
-    .pf-vid-card .pf-card-inner { position: relative; overflow: hidden; display: flex !important; align-items: flex-end !important; }
+    .pf-img-card .pf-card-info { z-index: 3; }
+    .pf-vid-card .pf-card-inner { position: relative; overflow: hidden; }
     .pf-vid-card .pf-card-inner::before { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,transparent 60%); border-radius:inherit; z-index:0; }
     .pf-vid-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
-    .pf-vid-card .pf-card-info { position: relative; z-index: 1; width: 100%; padding: 10px 12px 12px; }
+    .pf-vid-card .pf-card-info { z-index: 3; }
     </style>
   </section>
 
@@ -742,7 +741,7 @@
               return `<div class="pf-card pf-vid-card" onclick="window.location='portfolio.html'" style="cursor:pointer">
                 <div class="pf-card-inner ${cls}" style="position:relative;overflow:hidden;">
                   <video src="${src}" muted playsinline loop autoplay preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;"></video>
-                  <div class="pf-card-info" style="position:relative;z-index:1;">
+                  <div class="pf-card-info">
                     <span class="pf-tag">${item.category||'Portfolio'}</span>
                     <h4>${item.title||'Untitled'}</h4>
                   </div>
@@ -751,7 +750,7 @@
             } else if (src) {
               return `<div class="pf-card pf-img-card" onclick="window.location='portfolio.html'" style="cursor:pointer">
                 <div class="pf-card-inner ${cls}" style="background-image:url('${src}');background-size:cover;background-position:center;position:relative;">
-                  <div class="pf-card-info" style="position:relative;z-index:1;">
+                  <div class="pf-card-info">
                     <span class="pf-tag">${item.category||'Portfolio'}</span>
                     <h4>${item.title||'Untitled'}</h4>
                   </div>
@@ -795,6 +794,7 @@
   </script>
 </body>
 </html>
+
 
 
 
