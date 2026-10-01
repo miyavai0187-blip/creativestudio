@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -99,7 +99,6 @@
         <a href="index.html#about">About Us</a>
         <a href="index.html#services">Services</a>
         <a href="portfolio.html" class="active">Portfolio</a>
-        <a href="index.html#videos">Videos</a>
         <a href="index.html#contact">Contact</a>
       </nav>
       <a href="index.html#contact" class="nav-cta" id="nav-cta-btn">Get Started</a>
@@ -112,9 +111,9 @@
   <div class="pf-page">
     <div class="container">
       <div class="pf-hero">
-        <div class="pf-hero-tag">Our Work</div>
-        <h1>Our <span class="gradient-text">Portfolio</span></h1>
-        <p>Explore our completed works across Commercial Production, Content Creation, Documentaries, and more.</p>
+        <div class="pf-hero-tag" id="pf-page-tag">Our Work</div>
+        <h1 id="pf-page-title">Our <span class="gradient-text" id="pf-page-title-hl">Portfolio</span></h1>
+        <p id="pf-page-subtitle">Explore our completed works across Commercial Production, Content Creation, Documentaries, and more.</p>
       </div>
       <div class="pf-filters">
         <button class="pf-fbtn active" data-filter="all">All Work</button>
@@ -311,6 +310,29 @@
     }
 
     triggerAnimations();
+  </script>
+
+  <!-- CMS Portfolio Page Hydration -->
+  <script>
+  (async function() {
+    try {
+      const r = await fetch('/api/content');
+      if (!r.ok) return;
+      const d = await r.json();
+      const pp = d.portfolioPage || {};
+      const setText = (id, txt) => { const el=document.getElementById(id); if(el&&txt) el.textContent=txt; };
+      if (pp.tag)      setText('pf-page-tag', pp.tag);
+      if (pp.titleMain && pp.titleHighlight) {
+        const t = document.getElementById('pf-page-title');
+        const hl = document.getElementById('pf-page-title-hl');
+        if(t && hl) { t.childNodes[0].textContent = pp.titleMain + ' '; hl.textContent = pp.titleHighlight; }
+      }
+      if (pp.subtitle) setText('pf-page-subtitle', pp.subtitle);
+      const nav = d.navbar || {};
+      if (nav.ctaText) { const b=document.getElementById('nav-cta-btn'); if(b) b.textContent=nav.ctaText; }
+      if (nav.ctaHref) { const b=document.getElementById('nav-cta-btn'); if(b) b.href=nav.ctaHref; }
+    } catch(e) {}
+  })();
   </script>
 </body>
 </html>

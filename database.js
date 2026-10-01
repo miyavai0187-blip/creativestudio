@@ -1,4 +1,4 @@
-const fs    = require('fs');
+﻿const fs    = require('fs');
 const path  = require('path');
 const bcrypt = require('bcryptjs');
 
@@ -86,6 +86,12 @@ const DEFAULT_CONTENT = {
   footer: {
     tagline: 'Crafting digital experiences that elevate brands and drive results.',
     copyright: '© 2026 Creative Studio. All rights reserved.'
+  },
+  portfolioPage: {
+    tag: 'Our Work',
+    titleMain: 'Our',
+    titleHighlight: 'Portfolio',
+    subtitle: 'Explore our completed works across Commercial Production, Content Creation, Documentaries, and more.'
   },
   sections: {
     order: ['hero','ticker','about','services','portfolio','videos','testimonials','contact'],
@@ -230,3 +236,4 @@ class JsonDB {
 module.exports = function(dataDir) {
   return new JsonDB(dataDir);
 };
+

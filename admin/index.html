@@ -216,7 +216,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
     </div>
     <div class="nav-group">
       <div class="nav-group-label">Media & Portfolio</div>
-      <button class="nav-item" onclick="showPanel('portfolio')"><span class="icon">🎨</span>Portfolio</button>
+      <button class="nav-item" onclick="showPanel('portfolio')"><span class="icon">🎨</span>Portfolio Items</button>
+      <button class="nav-item" onclick="showPanel('portfoliopage')"><span class="icon">📄</span>Portfolio Page</button>
       <button class="nav-item" onclick="showPanel('media')"><span class="icon">🖼️</span>Media Library</button>
     </div>
     <div class="nav-group">
@@ -484,6 +485,45 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       </div>
     </div>
 
+
+    <!-- ══ PORTFOLIO PAGE SETTINGS ══ -->
+    <div class="panel" id="panel-portfoliopage">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📄 Portfolio Page — Header</div>
+          <button class="btn btn-primary btn-sm" onclick="savePortfolioPage()">💾 Save</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tag Text (e.g. "Our Work")</label>
+          <input class="form-input" id="pp-tag" placeholder="Our Work"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Title — Main Word</label>
+            <input class="form-input" id="pp-title-main" placeholder="Our"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Title — Highlight Word (green)</label>
+            <input class="form-input" id="pp-title-hl" placeholder="Portfolio"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subtitle / Description</label>
+          <textarea class="form-input" id="pp-subtitle" rows="3" placeholder="Explore our completed works..."></textarea>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">🔍 Preview</div></div>
+        <div style="background:#0a0a0a;border-radius:12px;padding:32px;text-align:center;">
+          <div style="display:inline-block;padding:5px 16px;border-radius:50px;background:rgba(121,179,43,0.1);border:1px solid rgba(121,179,43,0.35);color:#79b32b;font-size:0.8rem;font-weight:600;margin-bottom:12px;" id="pp-preview-tag">Our Work</div>
+          <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:8px;">
+            <span id="pp-preview-main">Our</span>
+            <span style="color:#79b32b;" id="pp-preview-hl"> Portfolio</span>
+          </h2>
+          <p style="color:#94a3b8;font-size:0.9rem;max-width:420px;margin:0 auto;" id="pp-preview-sub">Explore our completed works...</p>
+        </div>
+      </div>
+    </div>
     <!-- ══ NAVBAR & FOOTER ══ -->
     <div class="panel" id="panel-navbar">
       <div class="card">
@@ -679,7 +719,8 @@ async function loadDashboardStats() {
 const PANEL_TITLES = {
   dashboard:'Dashboard', hero:'Hero Section', ticker:'Service Ticker',
   about:'About Us', services:'Services', testimonials:'Testimonials',
-  contact:'Contact', portfolio:'Portfolio', media:'Media Library',
+  contact:'Contact', portfolio:'Portfolio Items', portfoliopage:'Portfolio Page',
+  media:'Media Library',
   navbar:'Navbar & Footer', sections:'Section Order', settings:'Settings',
   messages:'Customer Messages'
 };
@@ -693,9 +734,10 @@ function showPanel(id) {
   });
   document.getElementById('panel-title').textContent = PANEL_TITLES[id] || id;
   // Lazy load
-  if (id === 'media')    loadMedia('all');
-  if (id === 'portfolio') loadPortfolio().then(renderPortfolio);
-  if (id === 'messages') loadMessages();
+  if (id === 'media')         loadMedia('all');
+  if (id === 'portfolio')     loadPortfolio().then(renderPortfolio);
+  if (id === 'portfoliopage') populatePortfolioPage();
+  if (id === 'messages')      loadMessages();
 }
 
 function toggleSidebar() {
@@ -974,6 +1016,46 @@ function addNavLink() {
   renderNavLinks(siteData.navbar.links);
 }
 function removeNavLink(i) { siteData.navbar.links.splice(i,1); renderNavLinks(siteData.navbar.links); }
+
+// ── Portfolio Page Settings ────────────────────────────────────────────────
+function populatePortfolioPage() {
+  const pp = siteData.portfolioPage || {};
+  setValue('pp-tag',        pp.tag        || 'Our Work');
+  setValue('pp-title-main', pp.titleMain  || 'Our');
+  setValue('pp-title-hl',   pp.titleHighlight || 'Portfolio');
+  setValue('pp-subtitle',   pp.subtitle   || '');
+  updatePPPreview();
+}
+
+function updatePPPreview() {
+  const tag  = document.getElementById('pp-tag')?.value  || 'Our Work';
+  const main = document.getElementById('pp-title-main')?.value || 'Our';
+  const hl   = document.getElementById('pp-title-hl')?.value   || 'Portfolio';
+  const sub  = document.getElementById('pp-subtitle')?.value   || '';
+  const setT = (id,t) => { const e=document.getElementById(id); if(e) e.textContent=t; };
+  setT('pp-preview-tag',  tag);
+  setT('pp-preview-main', main);
+  setT('pp-preview-hl',   ' ' + hl);
+  setT('pp-preview-sub',  sub);
+}
+['pp-tag','pp-title-main','pp-title-hl','pp-subtitle'].forEach(id => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updatePPPreview);
+  });
+});
+
+async function savePortfolioPage() {
+  const data = {
+    tag:            val('pp-tag')        || 'Our Work',
+    titleMain:      val('pp-title-main') || 'Our',
+    titleHighlight: val('pp-title-hl')   || 'Portfolio',
+    subtitle:       val('pp-subtitle')   || ''
+  };
+  const r = await fetch('/api/content/portfolioPage', {method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  if (r.ok) { siteData.portfolioPage = data; toast('✅ Portfolio page saved!','success'); }
+  else toast('❌ Save failed','error');
+}
 
 async function saveNavbar() {
   const navData = { ...siteData.navbar, ctaText: val('nav-cta-text'), ctaHref: val('nav-cta-href'), logo: val('nav-logo-url') || siteData.navbar?.logo };
@@ -1353,3 +1435,5 @@ checkAuth();
 </script>
 </body>
 </html>
+
+
