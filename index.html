@@ -340,7 +340,7 @@
     </div>
   </section>
 
-            <section class="section portfolio" id="portfolio">
+        <section class="section portfolio" id="portfolio">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Our Work</span>
@@ -349,45 +349,46 @@
       </div>
     </div>
 
-    <!-- ROW 1: scrolls RIGHT — populated by admin or fallback -->
-    <div class="pf-marquee-wrap">
-      <div class="pf-marquee pf-row-right" id="pf-row-1">
-        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4></div></div></div>
-        <!-- dup -->
-        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4></div></div></div>
+    <!-- Dynamic portfolio grid (populated from admin) -->
+    <div class="container" id="portfolio-dynamic" style="display:none;">
+      <div class="pf-dynamic-grid" id="pf-dynamic-grid"></div>
+      <div style="text-align:center;margin-top:36px;">
+        <a href="portfolio.html" class="btn btn-outline">View All Work →</a>
       </div>
     </div>
 
-    <!-- ROW 2: scrolls LEFT — populated by admin or fallback -->
-    <div class="pf-marquee-wrap">
-      <div class="pf-marquee pf-row-left" id="pf-row-2">
-        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4></div></div></div>
-        <!-- dup -->
-        <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4></div></div></div>
-        <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4></div></div></div>
-      </div>
-    </div>
-
-    <div style="text-align:center;margin-top:28px;">
-      <a href="portfolio.html" class="btn btn-outline">View All Work →</a>
+    <!-- Static marquee fallback -->
+    <div id="portfolio-static">
+    <div class="pf-marquee-wrap"><div class="pf-marquee pf-row-right">
+      <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce with 3x sales</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI campaigns</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI 4.8 stars</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language corporate site</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views brand video</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics Brand</h4><p>Full brand identity</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow Platform</h4><p>High-converting e-commerce</p></div></div></div>
+    </div></div>
+    <div class="pf-marquee-wrap"><div class="pf-marquee pf-row-left">
+      <div class="pf-card"><div class="pf-card-inner p4"><span class="p-icon p-icon-4"></span><div class="pf-card-info"><span class="pf-tag">UI/UX Design</span><h4>FinTrack App</h4><p>Finance app UI 4.8 stars</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p5"><span class="p-icon p-icon-5"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>Global Corp Site</h4><p>Multi-language site</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p6"><span class="p-icon p-icon-6"></span><div class="pf-card-info"><span class="pf-tag">Video Editing</span><h4>ViralBoost Campaign</h4><p>2M+ views</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p3"><span class="p-icon p-icon-3"></span><div class="pf-card-info"><span class="pf-tag">Digital Marketing</span><h4>TechStart Growth</h4><p>500% ROI</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p1"><span class="p-icon p-icon-1"></span><div class="pf-card-info"><span class="pf-tag">Graphic Design</span><h4>Luxe Cosmetics</h4><p>Full brand identity</p></div></div></div>
+      <div class="pf-card"><div class="pf-card-inner p2"><span class="p-icon p-icon-2"></span><div class="pf-card-info"><span class="pf-tag">Web Development</span><h4>ShopNow</h4><p>E-commerce platform</p></div></div></div>
+    </div></div>
     </div>
 
     <style>
-    .pf-dyn-img-card .pf-card-inner { background-size:cover; background-position:center; position:relative; }
-    .pf-dyn-img-card .pf-card-inner::before { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 60%); border-radius:inherit; }
-    .pf-dyn-img-card .pf-card-info { position:relative; z-index:1; }
+    .pf-dynamic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px; padding:16px 0 8px; }
+    .pf-dyn-card { background:#1a1a1a; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.07); transition:transform .3s,box-shadow .3s; cursor:pointer; }
+    .pf-dyn-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(121,179,43,.15); }
+    .pf-dyn-thumb { width:100%; aspect-ratio:16/10; object-fit:cover; background:#222; display:block; }
+    .pf-dyn-thumb-ph { width:100%; aspect-ratio:16/10; background:linear-gradient(135deg,#1a2a0a,#0f1a05); display:flex; align-items:center; justify-content:center; font-size:2.5rem; }
+    .pf-dyn-info { padding:16px 18px 18px; }
+    .pf-dyn-cat { font-size:.72rem; color:var(--primary); font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+    .pf-dyn-title { font-size:1rem; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .pf-dyn-desc { font-size:.82rem; color:var(--text-muted); line-height:1.5; }
     </style>
   </section>
 
@@ -808,35 +809,30 @@
       const f = d.footer || {};
       if (f.copyright) setText('.footer-bottom p', f.copyright);
 
-      // PORTFOLIO — load from admin into marquee rows
+      // PORTFOLIO — load from admin database
       try {
         const pr = await fetch('/api/portfolio');
         const pd = await pr.json();
-        const vis = pd.filter(i => i.visible !== 0 && i.visible !== false);
-        if (vis.length > 0) {
-          const row1 = document.getElementById('pf-row-1');
-          const row2 = document.getElementById('pf-row-2');
-          const makeCard = item => {
-            const style = item.thumbnail ? `background-image:url('${item.thumbnail}');background-size:cover;background-position:center;` : '';
-            const cls = item.thumbnail ? 'pf-dyn-img-card' : '';
-            return `<div class="pf-card ${cls}" onclick="window.location='portfolio.html'" style="cursor:pointer">
-              <div class="pf-card-inner" style="${style}">
-                <div class="pf-card-info">
-                  <span class="pf-tag">${item.category||'Portfolio'}</span>
-                  <h4>${item.title||'Untitled'}</h4>
-                  ${item.description?`<p>${item.description}</p>`:''}
+        const visible = pd.filter(i => i.visible !== 0 && i.visible !== false);
+        if (visible.length > 0) {
+          const grid = document.getElementById('pf-dynamic-grid');
+          const dyn  = document.getElementById('portfolio-dynamic');
+          const stat = document.getElementById('portfolio-static');
+          if (grid && dyn && stat) {
+            grid.innerHTML = visible.map(item => `
+              <div class="pf-dyn-card" onclick="window.location='portfolio.html'">
+                ${item.thumbnail
+                  ? `<img class="pf-dyn-thumb" src="${item.thumbnail}" alt="${item.title||''}" loading="lazy"/>`
+                  : `<div class="pf-dyn-thumb-ph">🎨</div>`}
+                <div class="pf-dyn-info">
+                  <div class="pf-dyn-cat">${item.category || 'Portfolio'}</div>
+                  <div class="pf-dyn-title">${item.title || 'Untitled'}</div>
+                  ${item.description ? `<div class="pf-dyn-desc">${item.description}</div>` : ''}
                 </div>
-              </div>
-            </div>`;
-          };
-          // split items: odd → row1 (right), even → row2 (left); duplicate for loop
-          const half = Math.ceil(vis.length/2);
-          const r1items = vis.slice(0,half);
-          const r2items = vis.slice(half).length ? vis.slice(half) : vis.slice(0,half).reverse();
-          const r1html = [...r1items,...r1items].map(makeCard).join('');
-          const r2html = [...r2items,...r2items].map(makeCard).join('');
-          if(row1) row1.innerHTML = r1html;
-          if(row2) row2.innerHTML = r2html;
+              </div>`).join('');
+            dyn.style.display = '';
+            stat.style.display = 'none';
+          }
         }
       } catch(pe) { /* keep static marquee */ }
 
@@ -852,7 +848,6 @@
   </script>
 </body>
 </html>
-
 
 
 
