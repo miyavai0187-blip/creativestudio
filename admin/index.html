@@ -620,20 +620,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       </div>
     </div>
     <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="pf-desc" rows="2"></textarea></div>
-    <div class="form-group">
-      <label class="form-label">Thumbnail</label>
-      <div class="img-picker" style="height:80px;">
-        <img id="pf-thumb-preview" src="" style="display:none;max-height:70px;"/>
-        <div class="pick-text">📁 Upload thumbnail</div>
-        <input type="file" id="pf-thumb-file" accept="image/*" onchange="previewFile(this,'pf-thumb-preview')"/>
-      </div>
-    </div>
+    <!-- Combined Photo/Video Upload -->
     <div class="form-group" id="pf-media-upload">
-      <label class="form-label">Media (Image/Video)</label>
-      <div class="img-picker" style="height:80px;">
-        <div class="pick-text">📁 Upload media file</div>
-        <input type="file" id="pf-media-file" accept="image/*,video/*"/>
+      <label class="form-label" id="pf-media-label">📸 Photo / Image</label>
+      <div class="img-picker" id="pf-media-picker" style="min-height:100px;" onclick="document.getElementById('pf-media-file').click()">
+        <img id="pf-thumb-preview" src="" style="display:none;max-height:90px;border-radius:8px;"/>
+        <video id="pf-vid-preview" style="display:none;max-height:90px;width:100%;border-radius:8px;" muted playsinline></video>
+        <div class="pick-text" id="pf-media-picktext">📁 Click to upload — photo or video</div>
       </div>
+      <input type="file" id="pf-media-file" accept="image/*,video/*" style="display:none" onchange="handlePfMediaUpload(this)"/>
+      <input type="hidden" id="pf-thumb-url"/>
+      <div class="form-hint">Supports JPG, PNG, WebP, MP4, MOV, WebM</div>
     </div>
     <div class="form-group" id="pf-youtube-input" style="display:none;">
       <label class="form-label">YouTube URL</label>
@@ -1177,23 +1174,66 @@ function editPortfolioItem(id) {
 
 function togglePfMedia() {
   const type = document.getElementById('pf-mediatype').value;
-  document.getElementById('pf-media-upload').style.display = type === 'youtube' ? 'none' : 'block';
+  const lbl  = document.getElementById('pf-media-label');
+  const hint = document.querySelector('#pf-media-upload .form-hint');
+  document.getElementById('pf-media-upload').style.display  = type === 'youtube' ? 'none' : 'block';
   document.getElementById('pf-youtube-input').style.display = type === 'youtube' ? 'block' : 'none';
+  if (lbl) {
+    if (type === 'image') { lbl.textContent = '📸 Upload Photo / Image'; if(hint) hint.textContent='Supports JPG, PNG, WebP, GIF'; }
+    else if (type === 'video') { lbl.textContent = '🎬 Upload Video'; if(hint) hint.textContent='Supports MP4, MOV, WebM (max 200MB)'; }
+  }
+  // Reset previews when switching type
+  const img = document.getElementById('pf-thumb-preview');
+  const vid = document.getElementById('pf-vid-preview');
+  const pickTxt = document.getElementById('pf-media-picktext');
+  if(img) { img.style.display='none'; img.src=''; }
+  if(vid) { vid.style.display='none'; vid.src=''; }
+  if(pickTxt) pickTxt.style.display='block';
+  document.getElementById('pf-thumb-url').value = '';
+  document.getElementById('pf-media-file').value = '';
+}
+
+async function handlePfMediaUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const imgEl = document.getElementById('pf-thumb-preview');
+  const vidEl = document.getElementById('pf-vid-preview');
+  const txtEl = document.getElementById('pf-media-picktext');
+  txtEl.textContent = '⏳ Uploading...';
+  const isVideo = file.type.startsWith('video/');
+
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const r = await fetch('/api/media/upload', {method:'POST', credentials:'include', body:formData});
+    const d = await r.json();
+    if (d.success) {
+      document.getElementById('pf-thumb-url').value = d.url;
+      if (isVideo) {
+        vidEl.src = d.url; vidEl.style.display='block';
+        imgEl.style.display = 'none';
+        txtEl.textContent = '✅ ' + file.name;
+      } else {
+        imgEl.src = d.url; imgEl.style.display='block';
+        vidEl.style.display = 'none';
+        txtEl.textContent = '✅ ' + file.name;
+      }
+      toast('✅ Uploaded!', 'success');
+    } else { txtEl.textContent = '❌ Upload failed'; toast('❌ Upload failed','error'); }
+  } catch(e) { txtEl.textContent = '❌ Error'; toast('❌ Error','error'); }
 }
 
 async function savePortfolioItem() {
   const id = document.getElementById('pf-edit-id').value;
   const formData = new FormData();
-  formData.append('title', val('pf-title'));
-  formData.append('category', document.getElementById('pf-category').value);
-  formData.append('description', val('pf-desc'));
+  formData.append('title',      val('pf-title'));
+  formData.append('category',   document.getElementById('pf-category').value);
+  formData.append('description',val('pf-desc'));
   formData.append('media_type', document.getElementById('pf-mediatype').value);
-  const ytUrl = val('pf-youtube-url');
-  if (ytUrl) formData.append('youtube_url', ytUrl);
-  const thumbFile = document.getElementById('pf-thumb-file').files[0];
-  if (thumbFile) formData.append('thumbnail', thumbFile);
-  const mediaFile = document.getElementById('pf-media-file').files[0];
-  if (mediaFile) formData.append('media', mediaFile);
+  const ytUrl    = val('pf-youtube-url');
+  const thumbUrl = val('pf-thumb-url');
+  if (ytUrl)    formData.append('youtube_url', ytUrl);
+  if (thumbUrl) formData.append('thumbnail_url', thumbUrl);
 
   const url = id ? `/api/portfolio/${id}` : '/api/portfolio';
   const method = id ? 'PUT' : 'POST';
@@ -1435,5 +1475,6 @@ checkAuth();
 </script>
 </body>
 </html>
+
 
 

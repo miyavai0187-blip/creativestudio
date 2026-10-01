@@ -24,9 +24,11 @@ module.exports = function(db, uploadsDir) {
 
   // ── Create ─────────────────────────────────────────────────────────────
   router.post('/', requireAuth, upload.fields([{name:'thumbnail',maxCount:1},{name:'media',maxCount:1}]), (req, res) => {
-    const { title, category, description, media_type, youtube_url } = req.body;
-    const thumbnail = req.files?.thumbnail?.[0] ? `/uploads/${req.files.thumbnail[0].filename}` : null;
-    const media_url = youtube_url || (req.files?.media?.[0] ? `/uploads/${req.files.media[0].filename}` : null);
+    const { title, category, description, media_type, youtube_url, thumbnail_url } = req.body;
+    const thumbnail = req.files?.thumbnail?.[0]
+      ? `/uploads/${req.files.thumbnail[0].filename}`
+      : (thumbnail_url || null);
+    const media_url = youtube_url || (req.files?.media?.[0] ? `/uploads/${req.files.media[0].filename}` : thumbnail_url || null);
     const item = db.createPortfolio({ title, category, description, thumbnail, media_url, media_type: media_type||'image' });
     res.json({ success: true, item });
   });
@@ -37,9 +39,11 @@ module.exports = function(db, uploadsDir) {
     const existing = db.getPortfolioById(id);
     if (!existing) return res.status(404).json({ error: 'Not found' });
 
-    const { title, category, description, media_type, youtube_url, visible, sort_order } = req.body;
-    const thumbnail = req.files?.thumbnail?.[0] ? `/uploads/${req.files.thumbnail[0].filename}` : existing.thumbnail;
-    const media_url = youtube_url || (req.files?.media?.[0] ? `/uploads/${req.files.media[0].filename}` : existing.media_url);
+    const { title, category, description, media_type, youtube_url, visible, sort_order, thumbnail_url } = req.body;
+    const thumbnail = req.files?.thumbnail?.[0]
+      ? `/uploads/${req.files.thumbnail[0].filename}`
+      : (thumbnail_url || existing.thumbnail);
+    const media_url = youtube_url || (req.files?.media?.[0] ? `/uploads/${req.files.media[0].filename}` : thumbnail_url || existing.media_url);
 
     const item = db.updatePortfolio(id, {
       title, category, description, thumbnail, media_url,
