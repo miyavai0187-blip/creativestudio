@@ -404,88 +404,103 @@
 
   <!-- ══ TESTIMONIALS ══ -->
   <section id="testimonials" style="background:#111111;padding:80px 0;">
-    <div class="container" style="max-width:900px;">
+    <div class="container" style="max-width:920px;">
 
       <!-- Title -->
       <div style="text-align:center;margin-bottom:48px;">
         <h2 style="font-family:var(--font-heading);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:#79b32b;text-transform:uppercase;letter-spacing:1px;line-height:1.2;">Our Satisfied Customers<br>Feedback</h2>
       </div>
 
-      <!-- Slider Card -->
-      <div style="position:relative;">
-        <div id="rev-track" style="overflow:hidden;border-radius:20px;">
+      <!-- Slider -->
+      <div id="rev-track">
 
-          <!-- Card 1 -->
-          <div class="rev-slide" style="display:flex;background:linear-gradient(135deg,#4a8a1a,#79b32b);border-radius:20px;padding:32px 36px;gap:32px;align-items:center;min-height:240px;">
-            <div style="flex-shrink:0;width:160px;height:160px;border-radius:16px;overflow:hidden;align-self:center;">
-              <div class="rev-avatar" style="width:100%;height:100%;background:linear-gradient(135deg,#e59000,#f5a623);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:900;color:#fff;">IJ</div>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size:1rem;color:#fff;line-height:1.7;margin:0 0 20px;">I worked with CreativeStudio, their visual design teams did an excellent job on my project. I am currently working with them and look forward to collaborating on more projects in the future. Their creativity and attention just wow. I highly recommend their services!</p>
-              <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:16px;"/>
-              <div style="display:flex;align-items:center;justify-content:space-between;">
-                <div>
-                  <div style="font-size:1.05rem;font-weight:800;color:#fff;">Iraj Janali</div>
-                  <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">Founder at Janco</div>
-                </div>
+        <!-- Card 1 -->
+        <div class="rev-slide" style="display:flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
+          <!-- Avatar Left — full height, no padding -->
+          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
+            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#e59000,#f5a623);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">IJ</div>
+          </div>
+          <!-- Text Right -->
+          <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+            <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">I worked with CreativeStudio, their visual design teams did an excellent job on my project. I am currently working with them and look forward to collaborating on more projects in the future. Their creativity and attention just wow. I highly recommend their services!</p>
+            <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:1.05rem;font-weight:800;color:#fff;">Iraj Janali</div>
+                <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);">Founder at Janco</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="revSlide(-1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+                <button onclick="revSlide(1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8250;</button>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Card 2 -->
-          <div class="rev-slide" style="display:none;background:linear-gradient(135deg,#4a8a1a,#79b32b);border-radius:20px;padding:32px 36px;gap:32px;align-items:center;min-height:240px;">
-            <div style="flex-shrink:0;width:160px;height:160px;border-radius:16px;overflow:hidden;align-self:center;">
-              <div class="rev-avatar" style="width:100%;height:100%;background:linear-gradient(135deg,#0891b2,#67e8f9);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:900;color:#fff;">RT</div>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size:1rem;color:#fff;line-height:1.7;margin:0 0 20px;">I worked with CreativeStudio on our visual design and I am blown away by the attention to detail. Their creativity is unmatched and the team is incredibly responsive. Highly recommend!</p>
-              <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:16px;"/>
+        <!-- Card 2 -->
+        <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
+          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
+            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#0891b2,#67e8f9);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">RT</div>
+          </div>
+          <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+            <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">I worked with CreativeStudio on our visual design and I am blown away by the attention to detail. Their creativity is unmatched and the team is incredibly responsive. Highly recommend!</p>
+            <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
               <div>
                 <div style="font-size:1.05rem;font-weight:800;color:#fff;">Randy Taggart</div>
-                <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">Sr. Photographer at WACC</div>
+                <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);">Sr. Photographer at WACC</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="revSlide(-1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+                <button onclick="revSlide(1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8250;</button>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Card 3 -->
-          <div class="rev-slide" style="display:none;background:linear-gradient(135deg,#4a8a1a,#79b32b);border-radius:20px;padding:32px 36px;gap:32px;align-items:center;min-height:240px;">
-            <div style="flex-shrink:0;width:160px;height:160px;border-radius:16px;overflow:hidden;align-self:center;">
-              <div class="rev-avatar" style="width:100%;height:100%;background:linear-gradient(135deg,#059669,#6ee7b7);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:900;color:#fff;">NM</div>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size:1rem;color:#fff;line-height:1.7;margin:0 0 20px;">They handle all our design needs and recently developed our website. Excellent services, outstanding after-sales support, and budget-friendly. The best agency we have ever worked with!</p>
-              <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:16px;"/>
+        <!-- Card 3 -->
+        <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
+          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
+            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#059669,#6ee7b7);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">NM</div>
+          </div>
+          <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+            <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">They handle all our design needs and recently developed our website. Excellent services, outstanding after-sales support, and budget-friendly. The best agency we have ever worked with!</p>
+            <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
               <div>
                 <div style="font-size:1.05rem;font-weight:800;color:#fff;">Nayeem Mia</div>
-                <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">Founder at HNS TECH</div>
+                <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);">Founder at HNS TECH</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="revSlide(-1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+                <button onclick="revSlide(1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8250;</button>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Card 4 -->
-          <div class="rev-slide" style="display:none;background:linear-gradient(135deg,#4a8a1a,#79b32b);border-radius:20px;padding:32px 36px;gap:32px;align-items:center;min-height:240px;">
-            <div style="flex-shrink:0;width:160px;height:160px;border-radius:16px;overflow:hidden;align-self:center;">
-              <div class="rev-avatar" style="width:100%;height:100%;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:900;color:#fff;">SK</div>
-            </div>
-            <div style="flex:1;">
-              <p style="font-size:1rem;color:#fff;line-height:1.7;margin:0 0 20px;">Working with CreativeStudio was the best business decision this year. Their strategic approach and creative vision delivered amazing results. Absolutely phenomenal team!</p>
-              <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:16px;"/>
+        <!-- Card 4 -->
+        <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
+          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
+            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">SK</div>
+          </div>
+          <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+            <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">Working with CreativeStudio was the best business decision this year. Their strategic approach and creative vision delivered amazing results. Absolutely phenomenal team!</p>
+            <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
               <div>
                 <div style="font-size:1.05rem;font-weight:800;color:#fff;">Sarah Kim</div>
-                <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">CEO at GreenTech Solutions</div>
+                <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);">CEO at GreenTech Solutions</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="revSlide(-1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+                <button onclick="revSlide(1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8250;</button>
               </div>
             </div>
           </div>
-
         </div>
 
-        <!-- Nav Arrows — inside card bottom-right -->
-        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:16px;">
-          <button id="rev-prev" onclick="revSlide(-1)" style="width:42px;height:42px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.2rem;color:#1a1a1a;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:background .2s;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='#fff'">&#8249;</button>
-          <button id="rev-next" onclick="revSlide(1)"  style="width:42px;height:42px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.2rem;color:#1a1a1a;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:background .2s;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='#fff'">&#8250;</button>
-        </div>
       </div>
-
     </div>
   </section>
 
@@ -499,7 +514,6 @@
       slides[cur].style.display = 'flex';
     }
     window.revSlide = function(dir) { show(cur + dir); };
-    // Auto slide every 5s
     setInterval(()=>show(cur+1), 5000);
   })();
   </script>
@@ -820,6 +834,7 @@
   </script>
 </body>
 </html>
+
 
 
 
