@@ -1,4 +1,4 @@
-/* ===== LOGO IMAGE STYLES ===== */
+﻿/* ===== LOGO IMAGE STYLES ===== */
 .logo.logo-img { display: flex; align-items: center; }
 /* Transparent PNG on dark navbar: no background plate, no padding */
 .nav-logo-img {
@@ -57,9 +57,9 @@
   --primary-glow: rgba(121,179,43,0.25);
   --accent: #7c3aed;
   --accent2: #06b6d4;
-  --bg-dark: #000205;
-  --bg-card: #060d02;
-  --bg-card2: #0a110a;
+  --bg-dark: #111111;
+  --bg-card: #191919;
+  --bg-card2: #1a1a1a;
   --text: #e2e8f0;
   --text-muted: #94a3b8;
   --border: rgba(255,255,255,0.08);
@@ -82,7 +82,7 @@ html {
 
 body {
   font-family: var(--font);
-  background: #000000;
+  background: #111111;
   color: var(--text);
   line-height: 1.6;
   overflow-x: clip;
@@ -331,7 +331,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   justify-content: center;
   padding-top: 60px;
   overflow: hidden;
-  background: #000000;
+  background: #111111;
   width: 100%;
 }
 
@@ -855,7 +855,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 
 /* ===== CLIENT LOGOS SECTION ===== */
 .clients-section {
-  background: #000;
+  background: #111111;
   padding: 48px 0;
   overflow: hidden;
 }
@@ -985,7 +985,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   border-radius: 20px;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  background: #000;
+  background: #111111;
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 80px rgba(121,179,43,0.15);
 }
 .about-video-frame iframe {
@@ -1339,7 +1339,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 .video-modal-frame {
   position: relative;
   aspect-ratio: 16 / 9;
-  background: #000;
+  background: #111111;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -1914,3 +1914,4 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .nav-logo-img { height: 31px; }
   .navbar.scrolled .nav-logo-img { height: 28px; }
 }
+
