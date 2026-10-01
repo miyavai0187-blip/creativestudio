@@ -696,7 +696,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 .ticker-wrap {
   position: relative;
   z-index: 10;
-  margin: 8px 0;
+  margin: 4px 0;
   max-width: 100%;
   /* Subtle perspective tilt — depth without height change */
   transform: perspective(900px) rotateX(-4deg);
@@ -856,7 +856,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 /* ===== CLIENT LOGOS SECTION ===== */
 .clients-section {
   background: #111111;
-  padding: 48px 0;
+  padding: 18px 0;
   overflow: hidden;
 }
 .clients-marquee-wrap {
@@ -1914,5 +1914,6 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .nav-logo-img { height: 31px; }
   .navbar.scrolled .nav-logo-img { height: 28px; }
 }
+
 
 
