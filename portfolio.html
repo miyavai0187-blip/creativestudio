@@ -248,6 +248,67 @@
     </div>
   </div>
 
+  <!-- ══ VIDEO LIGHTBOX ══ -->
+  <div id="pf-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;">
+    <button onclick="closePfLightbox()" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;z-index:10;">&#x2715;</button>
+    <video id="pf-lightbox-video" controls autoplay style="max-width:90vw;max-height:85vh;border-radius:12px;"></video>
+    <img id="pf-lightbox-img" style="display:none;max-width:90vw;max-height:85vh;border-radius:12px;object-fit:contain;" />
+  </div>
+
+  <style>
+  .pf-real-card{background:#1a1a1a;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);cursor:pointer;transition:transform .3s,box-shadow .3s;}
+  .pf-real-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(121,179,43,.12);}
+  .pf-real-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;}
+  .pf-real-vid-wrap{position:relative;aspect-ratio:16/10;background:#000;overflow:hidden;}
+  .pf-real-vid-wrap video{width:100%;height:100%;object-fit:cover;}
+  .pf-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);}
+  .pf-play-btn{width:52px;height:52px;border-radius:50%;background:rgba(121,179,43,.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:transform .2s;}
+  .pf-play-btn:hover{transform:scale(1.1);}
+  .pf-real-info{padding:12px 14px 14px;}
+  .pf-real-cat{font-size:.7rem;color:var(--primary);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+  .pf-real-title{font-size:.9rem;font-weight:700;color:var(--text);}
+  .pf-real-desc{font-size:.78rem;color:var(--text-muted);margin-top:3px;line-height:1.4;}
+  </style>
+
+  <script>
+  (async function loadPortfolioItems(){
+    try{
+      const r=await fetch('/api/portfolio');if(!r.ok)return;
+      const items=await r.json();
+      const visible=items.filter(i=>i.visible!==0&&i.visible!==false);
+      if(!visible.length)return;
+      const catMap={commercial:'commercial',promotional:'promo',promo:'promo',content:'content',documentary:'documentary',social:'social',photography:'product',product:'product',advertising:'advertising',motion:'motion',creative:'creative'};
+      const grouped={};
+      visible.forEach(item=>{const cat=catMap[item.category]||item.category;if(!grouped[cat])grouped[cat]=[];grouped[cat].push(item);});
+      document.querySelectorAll('.pf-cat').forEach(section=>{
+        const cat=section.dataset.cat;
+        const catItems=grouped[cat];
+        if(!catItems||!catItems.length)return;
+        const badge=section.querySelector('.pf-cat-badge');
+        if(badge)badge.textContent=catItems.length+' item'+(catItems.length>1?'s':'');
+        const cardsEl=section.querySelector('.pf-cards');
+        if(!cardsEl)return;
+        cardsEl.innerHTML=catItems.map(item=>{
+          const isVideo=item.media_type==='video'||(item.thumbnail&&/\.(mp4|mov|webm)(\?|$)/i.test(item.thumbnail));
+          const src=item.thumbnail||item.media_url||'';
+          if(isVideo){
+            return `<div class="pf-real-card pf-animate" onclick="openPfLightboxVideo('${src}')"><div class="pf-real-vid-wrap"><video src="${src}" muted playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;"></video><div class="pf-play-overlay"><button class="pf-play-btn">&#9654;</button></div></div><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
+          } else if(item.youtube_url){
+            const ytId=item.youtube_url.match(/(?:v=|youtu\.be\/)([^&?/]+)/)?.[1]||'';
+            return `<div class="pf-real-card pf-animate" onclick="window.open('https://www.youtube.com/watch?v=${ytId}','_blank')"><img class="pf-real-thumb" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div></div></div>`;
+          } else {
+            return `<div class="pf-real-card pf-animate" onclick="openPfLightboxImg('${src}')"><img class="pf-real-thumb" src="${src}" alt="${item.title||''}" loading="lazy"/><div class="pf-real-info"><div class="pf-real-cat">${item.category||''}</div><div class="pf-real-title">${item.title||'Untitled'}</div>${item.description?`<div class="pf-real-desc">${item.description}</div>`:''}</div></div>`;
+          }
+        }).join('');
+      });
+    }catch(e){}
+  })();
+  function openPfLightboxVideo(src){const lb=document.getElementById('pf-lightbox');const vid=document.getElementById('pf-lightbox-video');const img=document.getElementById('pf-lightbox-img');vid.src=src;vid.style.display='block';img.style.display='none';lb.style.display='flex';}
+  function openPfLightboxImg(src){const lb=document.getElementById('pf-lightbox');const vid=document.getElementById('pf-lightbox-video');const img=document.getElementById('pf-lightbox-img');img.src=src;img.style.display='block';vid.style.display='none';vid.src='';lb.style.display='flex';}
+  function closePfLightbox(){document.getElementById('pf-lightbox-video').src='';document.getElementById('pf-lightbox').style.display='none';}
+  document.getElementById('pf-lightbox').addEventListener('click',function(e){if(e.target===this)closePfLightbox();});
+  </script>
+
   <script>
     // Hamburger
     const ham = document.getElementById('hamburger');
@@ -336,3 +397,4 @@
   </script>
 </body>
 </html>
+
