@@ -1,4 +1,4 @@
-﻿/* ===== LOGO IMAGE STYLES ===== */
+/* ===== LOGO IMAGE STYLES ===== */
 .logo.logo-img { display: flex; align-items: center; }
 /* Transparent PNG on dark navbar: no background plate, no padding */
 .nav-logo-img {
@@ -856,13 +856,14 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 /* ===== CLIENT LOGOS SECTION ===== */
 .clients-section {
   background: #111111;
-  padding: 18px 0;
+  padding: 28px 0;
   overflow: hidden;
 }
 .clients-marquee-wrap {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
+  padding: 6px 0;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
 }
