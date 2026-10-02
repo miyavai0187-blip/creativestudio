@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -417,9 +417,7 @@
         <!-- Card 1 -->
         <div class="rev-slide" style="display:flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
           <!-- Avatar Left — full height, no padding -->
-          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
-            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#e59000,#f5a623);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">IJ</div>
-          </div>
+          <div style="flex-shrink:0;width:240px;min-height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e59000,#f5a623);"><span style="font-size:3.5rem;font-weight:900;color:#fff;">IJ</span></div>
           <!-- Text Right -->
           <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
             <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">I worked with CreativeStudio, their visual design teams did an excellent job on my project. I am currently working with them and look forward to collaborating on more projects in the future. Their creativity and attention just wow. I highly recommend their services!</p>
@@ -439,9 +437,7 @@
 
         <!-- Card 2 -->
         <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
-          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
-            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#0891b2,#67e8f9);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">RT</div>
-          </div>
+          <div style="flex-shrink:0;width:240px;min-height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0891b2,#67e8f9);"><span style="font-size:3.5rem;font-weight:900;color:#fff;">RT</span></div>
           <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
             <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">I worked with CreativeStudio on our visual design and I am blown away by the attention to detail. Their creativity is unmatched and the team is incredibly responsive. Highly recommend!</p>
             <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
@@ -460,9 +456,7 @@
 
         <!-- Card 3 -->
         <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
-          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
-            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#059669,#6ee7b7);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">NM</div>
-          </div>
+          <div style="flex-shrink:0;width:240px;min-height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#059669,#6ee7b7);"><span style="font-size:3.5rem;font-weight:900;color:#fff;">NM</span></div>
           <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
             <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">They handle all our design needs and recently developed our website. Excellent services, outstanding after-sales support, and budget-friendly. The best agency we have ever worked with!</p>
             <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
@@ -481,9 +475,7 @@
 
         <!-- Card 4 -->
         <div class="rev-slide" style="display:none;flex;background:linear-gradient(135deg,#3d7a12,#79b32b);border-radius:22px;overflow:hidden;min-height:260px;">
-          <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
-            <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">SK</div>
-          </div>
+          <div style="flex-shrink:0;width:240px;min-height:260px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#7c3aed,#a78bfa);"><span style="font-size:3.5rem;font-weight:900;color:#fff;">SK</span></div>
           <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
             <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">Working with CreativeStudio was the best business decision this year. Their strategic approach and creative vision delivered amazing results. Absolutely phenomenal team!</p>
             <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
@@ -512,13 +504,16 @@
     const avatarColors = ['linear-gradient(135deg,#e59000,#f5a623)','linear-gradient(135deg,#0891b2,#67e8f9)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#059669,#6ee7b7)'];
 
     function makeSlide(t, idx, visible) {
-      const avatarContent = t.photo
-        ? `<img src="${t.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"/>`
-        : `<div style="width:100%;height:100%;background:${avatarColors[idx%4]};display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">${initials(t.name||'?')}</div>`;
+      // Left panel: photo fills full area OR initials fallback
+      const leftPanel = t.photo
+        ? `<div style="flex-shrink:0;width:240px;min-height:260px;overflow:hidden;position:relative;">
+             <img src="${t.photo}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
+           </div>`
+        : `<div style="flex-shrink:0;width:240px;min-height:260px;display:flex;align-items:center;justify-content:center;background:${avatarColors[idx%4]};">
+             <span style="font-size:3.5rem;font-weight:900;color:#fff;">${initials(t.name||'?')}</span>
+           </div>`;
       return `<div class="rev-slide" style="display:${visible?'flex':'none'};background:${CARD_BG};border-radius:22px;overflow:hidden;min-height:260px;">
-        <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
-          <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;">${avatarContent}</div>
-        </div>
+        ${leftPanel}
         <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
           <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">${t.review||''}</p>
           <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
@@ -876,6 +871,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
