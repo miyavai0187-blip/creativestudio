@@ -218,6 +218,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <div class="nav-group-label">Media & Portfolio</div>
       <button class="nav-item" onclick="showPanel('portfolio')"><span class="icon">🎨</span>Portfolio Items</button>
       <button class="nav-item" onclick="showPanel('portfoliopage')"><span class="icon">📄</span>Portfolio Page</button>
+      <button class="nav-item" onclick="showPanel('testimonials')"><span class="icon">⭐</span>Testimonials</button>
       <button class="nav-item" onclick="showPanel('media')"><span class="icon">🖼️</span>Media Library</button>
     </div>
     <div class="nav-group">
@@ -485,6 +486,60 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       </div>
     </div>
 
+
+    <!-- ══ TESTIMONIALS ══ -->
+    <div class="panel" id="panel-testimonials">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">⭐ Testimonials</div>
+          <button class="btn btn-primary btn-sm" onclick="openTestiModal()">+ Add Review</button>
+        </div>
+        <div id="testi-admin-list" style="display:grid;gap:14px;margin-top:8px;"></div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS MODAL -->
+    <div id="testi-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:#1a1a2e;border-radius:16px;padding:32px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative;">
+        <button onclick="closeTestiModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:#aaa;font-size:1.4rem;cursor:pointer;">✕</button>
+        <h3 style="margin:0 0 20px;color:#fff;" id="testi-modal-title">Add Review</h3>
+        <input type="hidden" id="testi-edit-id"/>
+
+        <!-- Photo upload -->
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-size:.85rem;color:#aaa;margin-bottom:8px;">Client Photo</label>
+          <div id="testi-photo-preview" onclick="document.getElementById('testi-photo-input').click()" style="width:110px;height:110px;border-radius:50%;background:#2a2a40;border:2px dashed #444;cursor:pointer;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">👤</div>
+          <input type="file" id="testi-photo-input" accept="image/*" style="display:none;" onchange="previewTestiPhoto(this)"/>
+          <p style="font-size:.75rem;color:#666;margin-top:6px;">Click to upload photo (JPG, PNG)</p>
+        </div>
+
+        <div style="display:grid;gap:14px;">
+          <div>
+            <label style="display:block;font-size:.85rem;color:#aaa;margin-bottom:6px;">Client Name *</label>
+            <input id="testi-name" type="text" placeholder="e.g. Randy Taggart" style="width:100%;background:#111;border:1px solid #333;border-radius:8px;padding:10px;color:#fff;font-size:.95rem;box-sizing:border-box;"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:.85rem;color:#aaa;margin-bottom:6px;">Job Title / Company *</label>
+            <input id="testi-role" type="text" placeholder="e.g. Sr. Photographer at WACC" style="width:100%;background:#111;border:1px solid #333;border-radius:8px;padding:10px;color:#fff;font-size:.95rem;box-sizing:border-box;"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:.85rem;color:#aaa;margin-bottom:6px;">Review Text *</label>
+            <textarea id="testi-review" rows="4" placeholder="Client's review..." style="width:100%;background:#111;border:1px solid #333;border-radius:8px;padding:10px;color:#fff;font-size:.95rem;box-sizing:border-box;resize:vertical;"></textarea>
+          </div>
+          <div>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;color:#aaa;font-size:.85rem;">
+              <input type="checkbox" id="testi-visible" checked style="width:16px;height:16px;"/>
+              Show on website
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end;">
+          <button onclick="closeTestiModal()" style="padding:10px 20px;background:#333;border:none;border-radius:8px;color:#fff;cursor:pointer;">Cancel</button>
+          <button onclick="saveTestimonial()" style="padding:10px 24px;background:var(--primary,#79b32b);border:none;border-radius:8px;color:#000;font-weight:700;cursor:pointer;" id="testi-save-btn">💾 Save</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ══ PORTFOLIO PAGE SETTINGS ══ -->
     <div class="panel" id="panel-portfoliopage">
@@ -1470,8 +1525,145 @@ async function deleteMsg(id) {
   toast('🗑️ Message deleted', 'success');
 }
 
+
 // ── Boot ──────────────────────────────────────────────────────────────
 checkAuth();
+
+// ══════════════════════════════════════════════════════════════════════
+// TESTIMONIALS
+// ══════════════════════════════════════════════════════════════════════
+let _testiPhotoFile = null;
+let _testiCurrentPhoto = '';
+
+async function loadTestimonials() {
+  try {
+    const r = await fetch('/api/testimonials/all', { credentials:'include' });
+    const items = await r.json();
+    const list = document.getElementById('testi-admin-list');
+    if (!list) return;
+    if (!items.length) { list.innerHTML = '<p style="color:#666;">No testimonials yet. Click "+ Add Review" to add one.</p>'; return; }
+    list.innerHTML = items.map(t => `
+      <div style="background:#1a1a2e;border-radius:12px;padding:16px;display:flex;gap:16px;align-items:center;border:1px solid rgba(255,255,255,0.06);">
+        <div style="flex-shrink:0;width:56px;height:56px;border-radius:50%;overflow:hidden;background:#2a2a40;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">
+          ${t.photo ? `<img src="${t.photo}" style="width:100%;height:100%;object-fit:cover;" />` : '👤'}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:#fff;">${t.name}</div>
+          <div style="font-size:.8rem;color:#79b32b;">${t.role}</div>
+          <div style="font-size:.82rem;color:#888;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:380px;">${t.review}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+          <button onclick="editTestimonial(${t.id})" style="padding:6px 14px;background:#2a2a40;border:1px solid #444;border-radius:6px;color:#fff;cursor:pointer;font-size:.82rem;">✏️ Edit</button>
+          <button onclick="deleteTestimonial(${t.id})" style="padding:6px 14px;background:#3a1a1a;border:1px solid #622;border-radius:6px;color:#f87;cursor:pointer;font-size:.82rem;">🗑️ Delete</button>
+          <span style="font-size:.72rem;color:${t.visible?'#79b32b':'#888'};text-align:center;">${t.visible?'✅ Visible':'👁️ Hidden'}</span>
+        </div>
+      </div>`).join('');
+  } catch(e) { console.error(e); }
+}
+
+function openTestiModal(editData) {
+  _testiPhotoFile = null;
+  _testiCurrentPhoto = '';
+  document.getElementById('testi-edit-id').value = '';
+  document.getElementById('testi-name').value = '';
+  document.getElementById('testi-role').value = '';
+  document.getElementById('testi-review').value = '';
+  document.getElementById('testi-visible').checked = true;
+  document.getElementById('testi-modal-title').textContent = 'Add Review';
+  const prev = document.getElementById('testi-photo-preview');
+  prev.innerHTML = '👤'; prev.style.backgroundImage = '';
+
+  if (editData) {
+    document.getElementById('testi-modal-title').textContent = 'Edit Review';
+    document.getElementById('testi-edit-id').value = editData.id;
+    document.getElementById('testi-name').value = editData.name || '';
+    document.getElementById('testi-role').value = editData.role || '';
+    document.getElementById('testi-review').value = editData.review || '';
+    document.getElementById('testi-visible').checked = editData.visible !== 0;
+    _testiCurrentPhoto = editData.photo || '';
+    if (editData.photo) {
+      prev.innerHTML = `<img src="${editData.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
+    }
+  }
+  document.getElementById('testi-modal').style.display = 'flex';
+}
+
+function closeTestiModal() {
+  document.getElementById('testi-modal').style.display = 'none';
+  _testiPhotoFile = null;
+}
+
+function previewTestiPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  _testiPhotoFile = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('testi-photo-preview').innerHTML =
+      `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function editTestimonial(id) {
+  try {
+    const r = await fetch('/api/testimonials/all', { credentials:'include' });
+    const items = await r.json();
+    const item = items.find(i => i.id === id);
+    if (item) openTestiModal(item);
+  } catch(e) { alert('Error loading testimonial'); }
+}
+
+async function saveTestimonial() {
+  const name   = document.getElementById('testi-name').value.trim();
+  const role   = document.getElementById('testi-role').value.trim();
+  const review = document.getElementById('testi-review').value.trim();
+  const visible = document.getElementById('testi-visible').checked ? '1' : '0';
+  const editId = document.getElementById('testi-edit-id').value;
+
+  if (!name || !review) { alert('Name and review are required!'); return; }
+
+  const btn = document.getElementById('testi-save-btn');
+  btn.textContent = '⏳ Saving...'; btn.disabled = true;
+
+  try {
+    const fd = new FormData();
+    fd.append('name', name);
+    fd.append('role', role);
+    fd.append('review', review);
+    fd.append('visible', visible);
+    if (_testiPhotoFile) {
+      fd.append('photo', _testiPhotoFile);
+    } else if (_testiCurrentPhoto) {
+      fd.append('photo', _testiCurrentPhoto);
+    }
+
+    const url = editId ? `/api/testimonials/${editId}` : '/api/testimonials';
+    const method = editId ? 'PUT' : 'POST';
+    const r = await fetch(url, { method, body: fd, credentials:'include' });
+    const data = await r.json();
+    if (data.success) {
+      closeTestiModal();
+      loadTestimonials();
+      showToast('Testimonial saved! ✅');
+    } else { alert('Save failed: ' + JSON.stringify(data)); }
+  } catch(e) { alert('Error: ' + e.message); }
+  finally { btn.textContent = '💾 Save'; btn.disabled = false; }
+}
+
+async function deleteTestimonial(id) {
+  if (!confirm('Delete this testimonial?')) return;
+  await fetch(`/api/testimonials/${id}`, { method:'DELETE', credentials:'include' });
+  loadTestimonials();
+  showToast('Deleted ✅');
+}
+
+// Load testimonials when panel opens
+const _origShowPanel = window.showPanel;
+window.showPanel = function(name) {
+  _origShowPanel(name);
+  if (name === 'testimonials') loadTestimonials();
+};
 </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿const fs    = require('fs');
+const fs    = require('fs');
 const path  = require('path');
 const bcrypt = require('bcryptjs');
 
@@ -103,11 +103,12 @@ const DEFAULT_CONTENT = {
 class JsonDB {
   constructor(dataDir) {
     this.dataDir = dataDir;
-    this.contentFile   = path.join(dataDir, 'content.json');
-    this.portfolioFile = path.join(dataDir, 'portfolio.json');
-    this.mediaFile     = path.join(dataDir, 'media.json');
-    this.usersFile     = path.join(dataDir, 'users.json');
-    this.messagesFile  = path.join(dataDir, 'messages.json');
+    this.contentFile       = path.join(dataDir, 'content.json');
+    this.portfolioFile     = path.join(dataDir, 'portfolio.json');
+    this.mediaFile         = path.join(dataDir, 'media.json');
+    this.usersFile         = path.join(dataDir, 'users.json');
+    this.messagesFile      = path.join(dataDir, 'messages.json');
+    this.testimonialsFile  = path.join(dataDir, 'testimonials.json');
     this._init();
   }
 
@@ -123,6 +124,15 @@ class JsonDB {
     if (!fs.existsSync(this.mediaFile))     this._write(this.mediaFile, []);
     // Seed messages
     if (!fs.existsSync(this.messagesFile))  this._write(this.messagesFile, []);
+    // Seed testimonials
+    if (!fs.existsSync(this.testimonialsFile)) {
+      this._write(this.testimonialsFile, [
+        { id:1, name:'Iraj Janali', role:'Founder at Janco', review:'I worked with CreativeStudio, their visual design teams did an excellent job on my project. I am currently working with them and look forward to collaborating on more projects in the future. Their creativity and attention just wow. I highly recommend their services!', photo:'', visible:1, sort_order:1 },
+        { id:2, name:'Randy Taggart', role:'Sr. Photographer at WACC', review:'I worked with CreativeStudio on our visual design and I am blown away by the attention to detail. Their creativity is unmatched and the team is incredibly responsive. Highly recommend!', photo:'', visible:1, sort_order:2 },
+        { id:3, name:'Nayeem Mia', role:'Founder at HNS TECH', review:'They handle all our design needs and recently developed our website. Excellent services, outstanding after-sales support, and budget-friendly. The best agency we have ever worked with!', photo:'', visible:1, sort_order:3 },
+        { id:4, name:'Sarah Kim', role:'CEO at GreenTech Solutions', review:'Working with CreativeStudio was the best business decision this year. Their strategic approach and creative vision delivered amazing results. Absolutely phenomenal team!', photo:'', visible:1, sort_order:4 }
+      ]);
+    }
     // Seed admin user
     if (!fs.existsSync(this.usersFile)) {
       const hash = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'admin123', 10);
@@ -181,6 +191,31 @@ class JsonDB {
     const items = this._read(this.portfolioFile);
     ids.forEach((id, idx) => { const item = items.find(i => i.id === id); if (item) item.sort_order = idx; });
     this._write(this.portfolioFile, items);
+  }
+
+  // ── Testimonials ───────────────────────────────────────────────────────
+  getAllTestimonials()  { return this._read(this.testimonialsFile); }
+  getTestimonialById(id) { return this._read(this.testimonialsFile).find(i => i.id === id) || null; }
+  createTestimonial(data) {
+    const items = this._read(this.testimonialsFile);
+    const maxId = items.reduce((m, i) => Math.max(m, i.id || 0), 0);
+    const maxOrder = items.reduce((m, i) => Math.max(m, i.sort_order || 0), 0);
+    const item = { id: maxId+1, sort_order: maxOrder+1, visible: 1, ...data };
+    items.push(item);
+    this._write(this.testimonialsFile, items);
+    return item;
+  }
+  updateTestimonial(id, data) {
+    const items = this._read(this.testimonialsFile);
+    const idx = items.findIndex(i => i.id === id);
+    if (idx === -1) return null;
+    items[idx] = { ...items[idx], ...data };
+    this._write(this.testimonialsFile, items);
+    return items[idx];
+  }
+  deleteTestimonial(id) {
+    const items = this._read(this.testimonialsFile).filter(i => i.id !== id);
+    this._write(this.testimonialsFile, items);
   }
 
   // ── Media ──────────────────────────────────────────────────────────────

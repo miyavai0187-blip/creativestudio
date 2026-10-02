@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -505,10 +505,52 @@
   </section>
 
   <script>
-  (function(){
-    const slides = document.querySelectorAll('.rev-slide');
+  (async function initTestiSlider(){
+    const track = document.getElementById('rev-track');
+    const CARD_BG = 'linear-gradient(135deg,#3d7a12,#79b32b)';
+    const initials = name => name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    const avatarColors = ['linear-gradient(135deg,#e59000,#f5a623)','linear-gradient(135deg,#0891b2,#67e8f9)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#059669,#6ee7b7)'];
+
+    function makeSlide(t, idx, visible) {
+      const avatarContent = t.photo
+        ? `<img src="${t.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;"/>`
+        : `<div style="width:100%;height:100%;background:${avatarColors[idx%4]};display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:900;color:#fff;">${initials(t.name||'?')}</div>`;
+      return `<div class="rev-slide" style="display:${visible?'flex':'none'};background:${CARD_BG};border-radius:22px;overflow:hidden;min-height:260px;">
+        <div style="flex-shrink:0;width:220px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);">
+          <div style="width:140px;height:155px;border-radius:14px;overflow:hidden;">${avatarContent}</div>
+        </div>
+        <div style="flex:1;padding:32px 36px;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-size:0.98rem;color:#fff;line-height:1.75;margin:0 0 22px;">${t.review||''}</p>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.25);margin-bottom:14px;"/>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-size:1.05rem;font-weight:800;color:#fff;">${t.name||''}</div>
+              <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);">${t.role||''}</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button onclick="revSlide(-1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8249;</button>
+              <button onclick="revSlide(1)" style="width:38px;height:38px;border-radius:50%;background:#fff;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;color:#222;display:flex;align-items:center;justify-content:center;">&#8250;</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    try {
+      const r = await fetch('/api/testimonials');
+      if (r.ok) {
+        const items = await r.json();
+        if (items && items.length) {
+          track.innerHTML = items.map((t,i) => makeSlide(t, i, i===0)).join('');
+        }
+      }
+    } catch(e) { /* use static */ }
+
+    // Init slider controls
     let cur = 0;
     function show(n) {
+      const slides = document.querySelectorAll('.rev-slide');
+      if (!slides.length) return;
       slides[cur].style.display = 'none';
       cur = (n + slides.length) % slides.length;
       slides[cur].style.display = 'flex';
