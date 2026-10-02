@@ -1,4 +1,4 @@
-/* ===== LOGO IMAGE STYLES ===== */
+﻿/* ===== LOGO IMAGE STYLES ===== */
 .logo.logo-img { display: flex; align-items: center; }
 /* Transparent PNG on dark navbar: no background plate, no padding */
 .nav-logo-img {
@@ -1122,7 +1122,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 }
 
 /* ===== PORTFOLIO MARQUEE ===== */
-.portfolio { background: var(--bg-card); overflow: hidden; padding-bottom: 80px; }
+.portfolio { background: var(--bg-card); overflow: hidden; padding-bottom: 40px; }
 .portfolio .container { margin-bottom: 0; }
 
 /* Wrapper: clips overflow, adds top/bottom fade mask */
@@ -1915,6 +1915,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .nav-logo-img { height: 31px; }
   .navbar.scrolled .nav-logo-img { height: 28px; }
 }
+
 
 
 
