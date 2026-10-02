@@ -211,7 +211,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
       <button class="nav-item" onclick="showPanel('ticker')"><span class="icon">🎞️</span>Service Ticker</button>
       <button class="nav-item" onclick="showPanel('about')"><span class="icon">👥</span>About Us</button>
       <button class="nav-item" onclick="showPanel('services')"><span class="icon">⚙️</span>Services</button>
-      <button class="nav-item" onclick="showPanel('testimonials')"><span class="icon">💬</span>Testimonials</button>
       <button class="nav-item" onclick="showPanel('contact')"><span class="icon">📞</span>Contact</button>
     </div>
     <div class="nav-group">
@@ -421,20 +420,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
           <div class="form-group"><label class="form-label">Heading Highlight</label><input class="form-input" id="svc-headhighlight"/></div>
         </div>
         <div class="service-list" id="service-list"></div>
-      </div>
-    </div>
-
-    <!-- ══ TESTIMONIALS ══ -->
-    <div class="panel" id="panel-testimonials">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Testimonials</div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn-outline btn-sm" onclick="addTestimonial()">+ Add</button>
-            <button class="btn btn-primary btn-sm" onclick="saveSection('testimonials')">💾 Save</button>
-          </div>
-        </div>
-        <div class="testi-list" id="testi-list"></div>
       </div>
     </div>
 
