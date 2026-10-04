@@ -57,7 +57,7 @@
   --primary-glow: rgba(121,179,43,0.25);
   --accent: #7c3aed;
   --accent2: #06b6d4;
-  --bg-dark: #111111;
+  --bg-dark: #000000;
   --bg-card: #191919;
   --bg-card2: #1a1a1a;
   --text: #e2e8f0;
@@ -82,7 +82,7 @@ html {
 
 body {
   font-family: var(--font);
-  background: #111111;
+  background: #000000;
   color: var(--text);
   line-height: 1.6;
   overflow-x: clip;
@@ -595,7 +595,10 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 /* Mobile — Hero as rounded card box */
 @media (max-width: 768px) {
   /* Clients ticker — mobile */
-  .clients-section { padding: 28px 0; }
+  .clients-section {
+    background: #000000;
+    padding: 14px 0 6px 0;
+  }
   .clients-marquee-wrap { gap: 10px; }
   .clients-track { will-change: transform; }
   .clients-left  { animation: clientsLeft  5s linear infinite !important; }
@@ -856,8 +859,8 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 
 /* ===== CLIENT LOGOS SECTION ===== */
 .clients-section {
-  background: #111111;
-  padding: 28px 0;
+  background: #000000;
+  padding: 24px 0;
   overflow: hidden;
 }
 .clients-marquee-wrap {
@@ -949,7 +952,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 .service-link:hover { letter-spacing: 0.5px; }
 
 /* ===== ABOUT ===== */
-.about { background: #111111; }
+.about { background: #000000; }
 
 /* Split layout: video left, text right */
 .about-split {
@@ -1067,7 +1070,8 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 /* About Mobile */
 @media (max-width: 768px) {
   .about {
-    padding: 32px 0;
+    background: #000000;
+    padding: 10px 0 32px 0;
   }
   .about .container {
     padding: 0 10px !important;
