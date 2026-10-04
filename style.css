@@ -1,4 +1,4 @@
-﻿/* ===== LOGO IMAGE STYLES ===== */
+/* ===== LOGO IMAGE STYLES ===== */
 .logo.logo-img { display: flex; align-items: center; }
 /* Transparent PNG on dark navbar: no background plate, no padding */
 .nav-logo-img {
@@ -1067,13 +1067,25 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 @media (max-width: 768px) {
   .about-split {
     grid-template-columns: 1fr !important;
-    gap: 24px;
+    gap: 16px;
   }
-  /* Video comes first (already first in DOM) */
+  /* Video — same card style as hero (yellow box) */
   .about-video-side {
     order: 1;
-    width: 100%;
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    border-radius: 20px;
+    overflow: hidden;
   }
+  .about-video-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .about-video-frame {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .about-video-glow { inset: -2px; border-radius: 22px; }
   /* Text below video */
   .about-text-side {
     order: 2;
@@ -1087,7 +1099,6 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   }
   .about-highlights { gap: 16px; flex-wrap: wrap; }
   .highlight-num { font-size: 1.3rem; }
-  .about-video-glow { inset: -2px; }
 }
 
 
