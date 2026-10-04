@@ -606,7 +606,7 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .client-dot { font-size: 0.75rem; }
 
   .hero {
-    min-height: auto;
+    min-height: 520px;
     height: auto;
     margin: 10px;
     border-radius: 20px;
@@ -1091,6 +1091,8 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   .about-video-frame {
     border-radius: 20px;
     overflow: hidden;
+    aspect-ratio: 4 / 3;
+    min-height: 300px;
   }
   .about-video-glow { inset: -2px; border-radius: 22px; }
   /* Text below video */
