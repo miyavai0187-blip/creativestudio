@@ -1065,15 +1065,22 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
 
 /* About Mobile */
 @media (max-width: 768px) {
+  .about {
+    padding: 32px 0;
+  }
+  .about .container {
+    padding: 0 10px !important;
+    max-width: 100% !important;
+  }
   .about-split {
     grid-template-columns: 1fr !important;
     gap: 16px;
   }
-  /* Video — same card style as hero (yellow box) */
+  /* Video — exact same card size and margins as hero (yellow box) */
   .about-video-side {
     order: 1;
-    width: calc(100% - 20px);
-    margin: 0 10px;
+    width: 100% !important;
+    margin: 0 !important;
     border-radius: 20px;
     overflow: hidden;
   }
@@ -1089,8 +1096,10 @@ a#nav-cta-btn { flex-shrink: 0; margin-left: 24px; }
   /* Text below video */
   .about-text-side {
     order: 2;
+    width: 100% !important;
+    margin: 0 !important;
     padding: 20px 16px;
-    border-radius: 14px;
+    border-radius: 20px;
   }
   .about-heading { font-size: 1.4rem; }
   .about-paragraph {
